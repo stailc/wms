@@ -406,25 +406,25 @@ public class Inventory extends javax.swing.JFrame {
     
     private void FILTER(String query)
     {
-        if(query == "Location")
+        if(query.equals("Location"))
         {
             String sql = "SELECT * FROM items order by location ASC";
 
             BINDDATA(sql);
         }
-        else if(query == "Color")
+        else if(query.equals("Color"))
         {
              String sql = "SELECT * FROM items order by color ASC ";
 
             BINDDATA(sql);
         }
-        else if(query == "Control ID")
+        else if(query.equals("Control ID"))
         {
              String sql = "SELECT * FROM items order by control_id ASC";
 
             BINDDATA(sql);
         }
-        else if(query == "None")
+        else if(query.equals("None"))
         {
              String sql = "SELECT * FROM items";
 
