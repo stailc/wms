@@ -5,6 +5,16 @@
  */
 package Admin;
 
+import Connection.MyConnection;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Y2J_2
@@ -27,26 +37,68 @@ public class AddUser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel2 = new javax.swing.JPanel();
-        jLabel17 = new javax.swing.JLabel();
-        patientformpanel = new javax.swing.JPanel();
-        lname = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
-        add = new javax.swing.JButton();
+        panel = new javax.swing.JPanel();
+        save = new javax.swing.JButton();
         cancel = new javax.swing.JButton();
-        jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
-        fname = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         uname = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        pass = new javax.swing.JPasswordField();
-        usertype_combo = new javax.swing.JComboBox<>();
+        usertypebox = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel17 = new javax.swing.JLabel();
+        passtxt = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        confirmpasstxt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
-        jPanel2.setBackground(new java.awt.Color(180, 16, 16));
+        panel.setBackground(new java.awt.Color(255, 255, 255));
+        panel.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+
+        save.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        save.setText("Save");
+        save.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveActionPerformed(evt);
+            }
+        });
+
+        cancel.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        cancel.setText("Cancel");
+        cancel.setPreferredSize(new java.awt.Dimension(87, 31));
+        cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cancelActionPerformed(evt);
+            }
+        });
+
+        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel13.setText("User Group:");
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel14.setText("Username:");
+
+        uname.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        uname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                unameActionPerformed(evt);
+            }
+        });
+
+        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel15.setText("Password:");
+
+        usertypebox.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        usertypebox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Admin", "Staff" }));
+        usertypebox.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                usertypeboxActionPerformed(evt);
+            }
+        });
+
+        jPanel2.setBackground(new java.awt.Color(255, 102, 0));
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -58,7 +110,7 @@ public class AddUser extends javax.swing.JFrame {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -69,171 +121,220 @@ public class AddUser extends javax.swing.JFrame {
                 .addGap(21, 21, 21))
         );
 
-        patientformpanel.setBackground(new java.awt.Color(255, 255, 255));
-        patientformpanel.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-
-        lname.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        lname.addActionListener(new java.awt.event.ActionListener() {
+        passtxt.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        passtxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lnameActionPerformed(evt);
+                passtxtActionPerformed(evt);
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel11.setText("Lastname");
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel16.setText("Confirm Password:");
 
-        add.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        add.setText("Add");
-        add.addActionListener(new java.awt.event.ActionListener() {
+        confirmpasstxt.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        confirmpasstxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addActionPerformed(evt);
+                confirmpasstxtActionPerformed(evt);
             }
         });
 
-        cancel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        cancel.setText("Cancel");
-        cancel.setPreferredSize(new java.awt.Dimension(87, 31));
-        cancel.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cancelActionPerformed(evt);
-            }
-        });
-
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel12.setText("Firstname");
-
-        jLabel13.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel13.setText("User Type");
-
-        fname.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        fname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                fnameActionPerformed(evt);
-            }
-        });
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel14.setText("Username");
-
-        uname.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        uname.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                unameActionPerformed(evt);
-            }
-        });
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel15.setText("Password");
-
-        pass.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-
-        usertype_combo.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        usertype_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nurse", "Admin" }));
-
-        javax.swing.GroupLayout patientformpanelLayout = new javax.swing.GroupLayout(patientformpanel);
-        patientformpanel.setLayout(patientformpanelLayout);
-        patientformpanelLayout.setHorizontalGroup(
-            patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(patientformpanelLayout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(patientformpanelLayout.createSequentialGroup()
-                        .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel14)
-                            .addComponent(jLabel15)
+        javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
+        panel.setLayout(panelLayout);
+        panelLayout.setHorizontalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(jLabel15)
+                        .addGap(18, 18, 18)
+                        .addComponent(passtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addComponent(jLabel14)
+                        .addGap(18, 18, 18)
+                        .addComponent(uname, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel16)
                             .addComponent(jLabel13))
                         .addGap(18, 18, 18)
-                        .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, 306, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(uname)
-                            .addComponent(pass, javax.swing.GroupLayout.DEFAULT_SIZE, 307, Short.MAX_VALUE)
-                            .addComponent(usertype_combo, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(patientformpanelLayout.createSequentialGroup()
-                        .addComponent(add, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(111, 111, 111)))
-                .addGap(0, 228, Short.MAX_VALUE))
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usertypebox, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(confirmpasstxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))))
         );
-        patientformpanelLayout.setVerticalGroup(
-            patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(patientformpanelLayout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(fname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+        panelLayout.setVerticalGroup(
+            panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabel14))
+                    .addComponent(uname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(18, 18, 18)
-                .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(uname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
-                .addGap(18, 18, 18)
-                .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(passtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(confirmpasstxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(usertype_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(26, 26, 26)
-                .addGroup(patientformpanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(add)
+                    .addComponent(usertypebox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(37, Short.MAX_VALUE))
+                .addGap(34, 34, 34))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(patientformpanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+            .addComponent(panel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(patientformpanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(panel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void lnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lnameActionPerformed
+    private void usertypeboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usertypeboxActionPerformed
 
-    private void addActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addActionPerformed
-
-    }//GEN-LAST:event_addActionPerformed
-
-    private void fnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_fnameActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_fnameActionPerformed
+    }//GEN-LAST:event_usertypeboxActionPerformed
 
     private void unameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_unameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_unameActionPerformed
 
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
-       new UserManagement().show();
-       dispose();
+        new UserManagement().show();
+        dispose();
     }//GEN-LAST:event_cancelActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
+        String name = uname.getText();
+        String pass = passtxt.getText();
+        String confirmpass = confirmpasstxt.getText();
+        String group = usertypebox.getSelectedItem().toString();
+        String grouptype = null;
+
+        if(group.equals("Admin"))
+        {
+             grouptype = "1";
+             
+        }
+        else if(group.equals("Staff"))
+        {
+             grouptype = "2";
+   
+        }
+        
+        Connection conn = MyConnection.getConnection();
+        
+        PreparedStatement ps;
+        String register = "INSERT INTO login (username, password, group_id) VALUES(?,?,?)";
+
+        try {
+            
+            ps = conn.prepareStatement(register);
+            ps.setString(1, name);
+            ps.setString(2, pass);
+            ps.setString(3, grouptype);
+
+            String unamecheck = uname.getText();
+            Statement stmt = conn.createStatement();
+            String check = "SELECT COUNT(*) as result FROM login WHERE username = '" + unamecheck + "'";
+            ResultSet rs = stmt.executeQuery(check);
+            
+            rs.next();
+            int result = rs.getInt("result");
+            
+            if(result > 0)
+            {
+                JOptionPane.showMessageDialog(null, "Username already exists");
+                return;
+            }
+            else
+            {
+                if(!confirmpass.equals(pass))
+                {    
+                    JOptionPane.showMessageDialog(null, "Password and Confirm Password does not match");
+                    return;
+                }
+                else
+                {
+                    String pattern1 = "^[A-Za-z0-9]{0,29}$";
+                    String pattern2 = "^[A-Za-z0-9]{7,29}$";
+                    Pattern patt2 = Pattern.compile(pattern2);
+                    Pattern patt1 = Pattern.compile(pattern1);
+                    
+                    Matcher match2 = patt1.matcher(uname.getText());
+                    Matcher match3 = patt2.matcher(passtxt.getText());
+
+
+                    if(!match2.matches())
+                    {
+                        JOptionPane.showMessageDialog(null, "Invalid Input");
+                        return;
+                    }
+                    else if(!match3.matches())
+                    {
+                        JOptionPane.showMessageDialog(null, "Password is not long enough");
+                        return;
+                    }
+                    
+                    if(name.equals(""))
+                    {
+                        JOptionPane.showMessageDialog(null, "Input User Name");
+                        return;
+                    }
+                    else if(pass.equals(""))
+                    {
+                        JOptionPane.showMessageDialog(null, "Input Password");
+                        return;
+                    }
+                    else if(group == null)
+                    {
+                        JOptionPane.showMessageDialog(null, "Select a User Group");
+                        return;
+                    }
+                }
+            }
+
+            ps.execute();
+            ps.close();
+            
+            UserManagement U = new UserManagement();
+            U.setVisible(true);
+            dispose();
+        
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, e);
+        }
+    }//GEN-LAST:event_saveActionPerformed
+
+    private void passtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passtxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passtxtActionPerformed
+
+    private void confirmpasstxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmpasstxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmpasstxtActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -268,20 +369,18 @@ public class AddUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton add;
     private javax.swing.JButton cancel;
-    private javax.swing.JTextField fname;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JTextField confirmpasstxt;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JTextField lname;
-    private javax.swing.JPasswordField pass;
-    private javax.swing.JPanel patientformpanel;
+    private javax.swing.JPanel panel;
+    private javax.swing.JTextField passtxt;
+    private javax.swing.JButton save;
     private javax.swing.JTextField uname;
-    private javax.swing.JComboBox<String> usertype_combo;
+    private javax.swing.JComboBox<String> usertypebox;
     // End of variables declaration//GEN-END:variables
 }

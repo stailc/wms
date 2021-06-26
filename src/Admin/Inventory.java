@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 /**
  *
@@ -24,11 +25,16 @@ import javax.swing.table.TableRowSorter;
 public class Inventory extends javax.swing.JFrame {
 
     public int selectedRow;
+    public String id;
     public Inventory() {
         initComponents();
         
         BINDDATA("SELECT * from items");
+        
+        
     }
+    
+    EditItem update = new EditItem();
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -53,12 +59,13 @@ public class Inventory extends javax.swing.JFrame {
         additem = new javax.swing.JButton();
         delete = new javax.swing.JButton();
         preview = new javax.swing.JLabel();
+        edititem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel2.setBackground(new java.awt.Color(180, 16, 16));
+        jPanel2.setBackground(new java.awt.Color(255, 102, 0));
         jPanel2.setPreferredSize(new java.awt.Dimension(330, 129));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
@@ -98,44 +105,44 @@ public class Inventory extends javax.swing.JFrame {
 
         itemtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Control ID", "Item Name", "Description", "Image", "Color", "Quantity", "Location", "Serial No.", "Accountability"
+                "Control ID", "Item Name", "Description", "Color", "Quantity", "Location", "Serial No.", "Accountability"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -206,6 +213,14 @@ public class Inventory extends javax.swing.JFrame {
         preview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         preview.setPreferredSize(new java.awt.Dimension(300, 300));
 
+        edititem.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        edititem.setText("Edit Item");
+        edititem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                edititemActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -220,15 +235,17 @@ public class Inventory extends javax.swing.JFrame {
                         .addComponent(searchtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(search)
-                        .addGap(759, 759, 759)
+                        .addGap(501, 501, 501)
+                        .addComponent(edititem, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(delete)
+                        .addGap(18, 18, 18)
                         .addComponent(additem, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(40, 40, 40)
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(filterbox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(997, 997, 997)
-                        .addComponent(delete))
+                        .addComponent(filterbox, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 995, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -244,20 +261,19 @@ public class Inventory extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(10, 10, 10)
-                        .addComponent(additem))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(additem)
+                            .addComponent(edititem)
+                            .addComponent(delete)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(searchtxt)
                             .addComponent(search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addGap(3, 3, 3)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(delete))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(filterbox)))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(filterbox))
                 .addGap(23, 23, 23)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 530, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -306,11 +322,15 @@ public class Inventory extends javax.swing.JFrame {
         DefaultTableModel table = (DefaultTableModel) itemtable.getModel();
         selectedRow = itemtable.getSelectedRow();
         
-        int id = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
-
+        this.id = table.getValueAt(selectedRow, 0).toString();
+        
+        int decision = JOptionPane.showConfirmDialog(null, "Are you sure?",null, JOptionPane.YES_NO_OPTION);
+        if(decision == JOptionPane.YES_OPTION) 
+        {
+        
         try{
 
-            String sql = "DELETE FROM items WHERE control_id = " + id;
+            String sql = "DELETE FROM items WHERE control_id = " + this.id;
             PreparedStatement ps = MyConnection.getConnection().prepareStatement(sql);
             ps.execute(sql);
 
@@ -322,6 +342,7 @@ public class Inventory extends javax.swing.JFrame {
         }
 
         BINDDATA("SELECT * from items");
+        }
     }//GEN-LAST:event_deleteActionPerformed
 
     private void itemtableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemtableMouseClicked
@@ -330,10 +351,12 @@ public class Inventory extends javax.swing.JFrame {
         DefaultTableModel table = (DefaultTableModel) itemtable.getModel();
         selectedRow = itemtable.getSelectedRow();
         
-        int id = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
+        this.id = table.getValueAt(selectedRow, 0).toString();
+          
+        BINDIMAGE(id, 0);
         
+        update.idrow.setText(String.valueOf(this.id));
         
-        BINDIMAGE(id);
     }//GEN-LAST:event_itemtableMouseClicked
 
     private void searchtxtKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchtxtKeyPressed
@@ -353,6 +376,39 @@ public class Inventory extends javax.swing.JFrame {
 
         FILTER(query);
     }//GEN-LAST:event_filterboxItemStateChanged
+
+    private void edititemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edititemActionPerformed
+        int index = itemtable.getSelectedRow();
+        
+        TableModel model = itemtable.getModel();
+        
+        String id = model.getValueAt(index, 0).toString();
+        String itemname = model.getValueAt(index, 1).toString();
+        String description = model.getValueAt(index, 2).toString();
+        String color = model.getValueAt(index, 3).toString();
+        String quantity = model.getValueAt(index, 4).toString();
+        String location = model.getValueAt(index, 5).toString();
+        String serial = model.getValueAt(index, 6).toString();
+        String accountability = model.getValueAt(index, 7).toString();
+        
+        update.setVisible(true);
+        update.pack();
+        update.setLocationRelativeTo(null);
+        update.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                
+        update.controlidtxt.setText(id);
+        update.itemtxt.setText(itemname);
+        update.descriptiontxt.setText(description);
+        update.colortxt.setText(color);
+        update.quantitytxt.setText(quantity);
+        update.locationtxt.setText(location);
+        update.serialtxt.setText(serial);
+        update.acctxt.setText(accountability);
+        
+        BINDIMAGE(id, 1);
+        
+        dispose();
+    }//GEN-LAST:event_edititemActionPerformed
     
     public void BINDDATA(String sql)
     {
@@ -368,7 +424,7 @@ public class Inventory extends javax.swing.JFrame {
             while(rs.next())
                 {
                  Object obj[] = {rs.getString("control_id"), rs.getString("item_name") ,rs.getString("description") 
-                         ,rs.getString("image") ,rs.getString("color") ,rs.getInt("quantity") ,rs.getString("location") 
+                         /*,rs.getString("image")*/ ,rs.getString("color") ,rs.getInt("quantity") ,rs.getString("location") 
                          ,rs.getInt("serial_no") ,rs.getString("accountability")};
                  table.addRow(obj);
                 } 
@@ -376,8 +432,9 @@ public class Inventory extends javax.swing.JFrame {
       }
       catch(Exception e){}
     }
+
     
-    private void BINDIMAGE(int id)
+    private void BINDIMAGE(String id, int x)
     {
             
       try{
@@ -392,15 +449,26 @@ public class Inventory extends javax.swing.JFrame {
           byte[] img = rs.getBytes("image");
           ImageIcon image = new ImageIcon(img);
           Image im = image.getImage();
-          Image myImg = im.getScaledInstance(457, 332, Image.SCALE_SMOOTH );
+          Image myImg = im.getScaledInstance(300, 250, Image.SCALE_SMOOTH );
           ImageIcon newImage = new ImageIcon(myImg);
-          preview.setIcon(newImage);
+          
+          if(x==0)
+          {
+            preview.setIcon(newImage);
+          }
+          else
+          {
+            update.preview.setIcon(newImage);
+            update.img = img;
+          }
 
         }
         st.close();
       }
       catch(Exception e){
       preview.setText("Photo Missing");
+      
+      
       }
     }
     
@@ -430,11 +498,6 @@ public class Inventory extends javax.swing.JFrame {
 
             BINDDATA(sql);
         }
-        
-        
-        
-        
-        
     }
 
     public static void main(String args[]) {
@@ -450,8 +513,9 @@ public class Inventory extends javax.swing.JFrame {
     private javax.swing.JLabel ReturnButton;
     private javax.swing.JButton additem;
     private javax.swing.JButton delete;
+    public javax.swing.JButton edititem;
     private javax.swing.JComboBox<String> filterbox;
-    private javax.swing.JTable itemtable;
+    public javax.swing.JTable itemtable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
