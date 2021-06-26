@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import javax.swing.JOptionPane;
+import javax.swing.*;
+
+import com.sun.org.apache.xerces.internal.impl.xpath.regex.Match;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -17,7 +19,13 @@ import org.apache.commons.lang3.StringUtils;
  */
 public class AddEmployee extends javax.swing.JFrame {
 
-    
+    private static final String PATTERN_1 = "^[A-Za-z]{0,29}$";
+    private static final String PATTERN_2 = "^[A-Za-z]{0,29}$";
+/*    private static final String PATTERN_3 = "^[A-Za-z0-9]{0,29}$";*/
+
+    private static final Pattern patt1 = Pattern.compile(PATTERN_1);
+    private static final Pattern patt2 = Pattern.compile(PATTERN_2);
+
     public AddEmployee() {
         initComponents();
     }
@@ -312,34 +320,18 @@ public class AddEmployee extends javax.swing.JFrame {
         + "(?,?,?,?,?,?,?,?)";
 
         try {
-            
-            
-            String pattern1 = "^[A-Za-z]{0,29}$";
-            String pattern2 = "^[A-Za-z0-9]{0,29}$";
-            String pattern3 = "^[0-9]{0,29}$";
-            Pattern patt1 = Pattern.compile(pattern1);
-            Pattern patt2 = Pattern.compile(pattern2);
-            Pattern patt3 = Pattern.compile(pattern3);
-            
-            Matcher match2 = patt2.matcher(employeeidtxt.getText());
-            Matcher match3 = patt1.matcher(firstnametxt.getText());
-            Matcher match4 = patt1.matcher(middlenametxt.getText());
-            Matcher match5 = patt1.matcher(lastnametxt.getText());
-            Matcher match6 = patt1.matcher(companynametxt.getText());
-            Matcher match7 = patt1.matcher(departmenttxt.getText());
-            
-            
-            if(!match2.matches() || 
-               !match3.matches() || 
-               !match4.matches() || 
-               !match5.matches() || 
-               !match6.matches() || 
-               !match7.matches())
+            Matcher match2 = getMatcherUsingPattern(employeeidtxt, patt2);
+            Matcher match3 = getMatcherUsingPattern(firstnametxt, patt1);
+            Matcher match4 = getMatcherUsingPattern(middlenametxt, patt1);
+            Matcher match5 = getMatcherUsingPattern(lastnametxt, patt1);
+            Matcher match6 = getMatcherUsingPattern(companynametxt, patt1);
+            Matcher match7 = getMatcherUsingPattern(departmenttxt, patt1);
+
+            if(anyInputIsInvalid(match2, match3, match4, match5, match6, match7))
             {
                 JOptionPane.showMessageDialog(null, "Invalid Input");
                 return;
             }
-            
 
             if(id.equals(""))
             {
@@ -376,7 +368,7 @@ public class AddEmployee extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Select a Birthdate");
                 return;
             }
-                        
+
             PreparedStatement ps = MyConnection.getConnection().prepareStatement(add);
             
             ps.setString(1, id);
@@ -401,6 +393,19 @@ public class AddEmployee extends javax.swing.JFrame {
         }
     
     }//GEN-LAST:event_saveActionPerformed
+
+    private Matcher getMatcherUsingPattern(JTextField param, Pattern pattern){
+        return pattern.matcher(param.getText());
+    }
+
+    private boolean anyInputIsInvalid(Matcher match2, Matcher match3, Matcher match4, Matcher match5, Matcher match6, Matcher match7){
+        return (!match2.matches() ||
+                !match3.matches() ||
+                !match4.matches() ||
+                !match5.matches() ||
+                !match6.matches() ||
+                !match7.matches()));
+    }
 
     private void employeeidtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeidtxtActionPerformed
         // TODO add your handling code here:
