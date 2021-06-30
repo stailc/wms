@@ -214,45 +214,48 @@ public class AddItem extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(jLabel11)
-                        .addGap(18, 18, 18)
-                        .addComponent(controlidtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(265, 265, 265)
-                        .addComponent(jLabel4)
-                        .addGap(18, 18, 18)
-                        .addComponent(upload, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(4, 4, 4)
                                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
                                     .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(6, 6, 6)
-                                        .addComponent(jLabel2))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(44, 44, 44)
-                                        .addComponent(jLabel6))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(21, 21, 21)
-                                        .addComponent(jLabel7))
-                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                        .addGap(23, 23, 23)
-                                        .addComponent(jLabel8)))
-                                .addGap(18, 18, 18))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel9)
-                                .addGap(18, 18, 18)))
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(itemtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(locationtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(quantitytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(colortxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(serialtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(4, 4, 4)
+                                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(6, 6, 6)
+                                                .addComponent(jLabel2))
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(44, 44, 44)
+                                                .addComponent(jLabel6))
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(21, 21, 21)
+                                                .addComponent(jLabel7))
+                                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                                .addGap(23, 23, 23)
+                                                .addComponent(jLabel8)))
+                                        .addGap(18, 18, 18))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                                        .addComponent(jLabel9)
+                                        .addGap(18, 18, 18)))
+                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(itemtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(locationtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(quantitytxt, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(colortxt, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(serialtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(12, 12, 12)
+                                .addComponent(jLabel11)
+                                .addGap(18, 18, 18)
+                                .addComponent(controlidtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(110, 110, 110)
-                        .addComponent(preview, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addGap(18, 18, 18)
+                                .addComponent(upload, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(preview, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(80, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 1100, Short.MAX_VALUE)
         );
@@ -260,21 +263,22 @@ public class AddItem extends javax.swing.JFrame {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel3Layout.createSequentialGroup()
-                            .addGap(4, 4, 4)
-                            .addComponent(jLabel4))
-                        .addComponent(upload))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
                                 .addGap(3, 3, 3)
                                 .addComponent(jLabel11))
-                            .addComponent(controlidtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(4, 4, 4)))
-                .addGap(18, 18, 18)
+                            .addComponent(controlidtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createSequentialGroup()
+                                .addGap(4, 4, 4)
+                                .addComponent(jLabel4))
+                            .addComponent(upload))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(3, 3, 3)
@@ -314,7 +318,7 @@ public class AddItem extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(save)
                     .addComponent(cancel))
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addContainerGap(80, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -352,7 +356,6 @@ public class AddItem extends javax.swing.JFrame {
         preview.setIcon(new ImageIcon(f.toString()));
 
         String filename = f.getAbsolutePath();
-        
 
         try{
             File image = new File(filename);
@@ -421,24 +424,24 @@ public class AddItem extends javax.swing.JFrame {
             
             
             
-            String pattern1 = "^[A-Za-z]{0,29}$";
-            String pattern2 = "^[A-Za-z0-9]{0,29}$";
-            String pattern3 = "^[0-9]{0,29}$";
-            String pattern4 = "^[A-Za-z0-9]{0,199}$";
-            String pattern5 = "";
+            String pattern1 = "^[A-Za-z]{0,50}$";
+            String pattern3 = "^[0-9]{0,10}$";
+            String pattern4 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,200}$$";
+            String pattern5 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,50}$";
+            String pattern6 = "^[A-Za-z0-9\\S`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,50}$";
             Pattern patt1 = Pattern.compile(pattern1);
-            Pattern patt2 = Pattern.compile(pattern2);
             Pattern patt3 = Pattern.compile(pattern3);
             Pattern patt4 = Pattern.compile(pattern4);
             Pattern patt5 = Pattern.compile(pattern5);
-            Matcher match1 = patt2.matcher(controlidtxt.getText());
-            Matcher match2 = patt2.matcher(itemtxt.getText());
+            Pattern patt6 = Pattern.compile(pattern6);
+            Matcher match1 = patt6.matcher(controlidtxt.getText());
+            Matcher match2 = patt5.matcher(itemtxt.getText());
             Matcher match3 = patt4.matcher(descriptiontxt.getText());
             Matcher match4 = patt1.matcher(colortxt.getText());
             Matcher match5 = patt3.matcher(quantitytxt.getText());
-            Matcher match6 = patt2.matcher(locationtxt.getText());
-            Matcher match7 = patt2.matcher(serialtxt.getText());
-            Matcher match8 = patt1.matcher(acctxt.getText());
+            Matcher match6 = patt5.matcher(locationtxt.getText());
+            Matcher match7 = patt5.matcher(serialtxt.getText());
+            Matcher match8 = patt5.matcher(acctxt.getText());
             
             if(!match1.matches() || 
                !match2.matches() || 
@@ -527,25 +530,6 @@ public class AddItem extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_controlidtxtActionPerformed
 
-    public void DATAVALIDATION()
-    {
-        String pattern1 = "^[A-Za-z]{0,29}$";
-        Pattern patt = Pattern.compile(pattern1);
-        Matcher match = patt.matcher(itemtxt.getText());
-        
-                if(!match.matches()) 
-                {
-                    JOptionPane.showMessageDialog(null, "Invalid Input");
-                    
-                    
-                    
-                }
-     
-    }
-    
-    
-    
-    
     public static void main(String args[]) {
         
         java.awt.EventQueue.invokeLater(new Runnable() {

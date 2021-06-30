@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import Connection.MyConnection;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
@@ -43,6 +46,7 @@ public class Employees extends javax.swing.JFrame {
         employeetable = new javax.swing.JTable();
         deleteemployee = new javax.swing.JButton();
         editemployee = new javax.swing.JButton();
+        generatecsv = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -185,6 +189,14 @@ public class Employees extends javax.swing.JFrame {
             }
         });
 
+        generatecsv.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        generatecsv.setText("Generate CSV");
+        generatecsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatecsvActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -197,7 +209,9 @@ public class Employees extends javax.swing.JFrame {
                 .addComponent(searchtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(search)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 432, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
+                .addComponent(generatecsv)
+                .addGap(18, 18, 18)
                 .addComponent(editemployee)
                 .addGap(18, 18, 18)
                 .addComponent(deleteemployee)
@@ -217,7 +231,8 @@ public class Employees extends javax.swing.JFrame {
                     .addComponent(search)
                     .addComponent(addemployee)
                     .addComponent(deleteemployee)
-                    .addComponent(editemployee))
+                    .addComponent(editemployee)
+                    .addComponent(generatecsv))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -358,6 +373,83 @@ public class Employees extends javax.swing.JFrame {
        }
     }//GEN-LAST:event_editemployeeActionPerformed
 
+    private void generatecsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatecsvActionPerformed
+        Connection conn = MyConnection.getConnection();
+
+        try {
+            String csvfilename;
+            
+            csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
+            
+            if(csvfilename != null)
+            {
+            
+            String sql = "SELECT * FROM employees";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            
+            PrintWriter pw = new PrintWriter(new File("C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv"));
+            StringBuilder sb = new StringBuilder();
+            
+                sb.append("Employee ID");
+                sb.append(",");
+                sb.append("Company Name");
+                sb.append(",");
+                sb.append("Department");
+                sb.append(",");
+                sb.append("First Name");
+                sb.append(",");
+                sb.append("Last Name");
+                sb.append(",");
+                sb.append("Middle Name");
+                sb.append(",");
+                sb.append("Birth Date");
+                sb.append(",");
+                sb.append("Gender");
+                sb.append("\r\n");
+            
+            
+            while(rs.next())
+            {
+                sb.append(rs.getString("employee_id"));
+                sb.append(",");
+                sb.append(rs.getString("company_name"));
+                sb.append(",");
+                sb.append(rs.getString("department"));
+                sb.append(",");
+                sb.append(rs.getString("firstname"));
+                sb.append(",");
+                sb.append(rs.getString("lastname"));
+                sb.append(",");
+                sb.append(rs.getString("middlename"));
+                sb.append(",");
+                sb.append(rs.getString("birthdate"));
+                sb.append(",");
+                sb.append( rs.getString("gender"));
+                sb.append("\r\n");
+            } 
+            
+            st.close();
+            
+            pw.write(sb.toString());
+            pw.close();
+            
+            JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
+            + "File path: C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv");
+            
+            }
+            else
+            {
+                
+            }
+                
+            
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }//GEN-LAST:event_generatecsvActionPerformed
+
     public void BINDDATA(String sql)
     {
       try{
@@ -418,6 +510,7 @@ public class Employees extends javax.swing.JFrame {
     private javax.swing.JButton deleteemployee;
     private javax.swing.JButton editemployee;
     public javax.swing.JTable employeetable;
+    private javax.swing.JButton generatecsv;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;

@@ -418,19 +418,19 @@ public class EditItem extends javax.swing.JFrame {
     }//GEN-LAST:event_acctxtActionPerformed
     
     private void saveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveActionPerformed
-        int id = Integer.valueOf(idrow.getText()).intValue();
+        String id = String.valueOf(idrow.getText());
 
         String itemname = itemtxt.getText();
         String description = descriptiontxt.getText();
         String color = colortxt.getText();
-        String quantity = quantitytxt.getText();
+        int quantity = Integer.parseInt(quantitytxt.getText());
         String location = locationtxt.getText();
         String serial = serialtxt.getText();
         String accountability = acctxt.getText();
 
         PreparedStatement ps;
         ResultSet rs;
-        String register = "UPDATE items SET item_name =?, description=? , image=?, color=?, quantity=?, location=?, serial_no=?, accountability=? WHERE control_id =" + id;
+        String register = "UPDATE items SET item_name =?, description=? , image=?, color=?, quantity=?, location=?, serial_no=?, accountability=? WHERE control_id = '" + id + "'";
 
         try {
 
@@ -440,7 +440,7 @@ public class EditItem extends javax.swing.JFrame {
             ps.setString(2, description);
             //ps.setBytes(3, file);
             ps.setString(4, color);
-            ps.setString(5, quantity);
+            ps.setInt(5, quantity);
             ps.setString(6, location);
             ps.setString(7, serial);
             ps.setString(8, accountability);
@@ -455,24 +455,27 @@ public class EditItem extends javax.swing.JFrame {
                 ps.setBytes(3, file);
             }
             
-            String pattern1 = "^[A-Za-z]{0,29}$";
-            String pattern2 = "^[A-Za-z0-9]{0,29}$";
-            String pattern3 = "^[0-9]{0,29}$";
-            String pattern4 = "^[A-Za-z0-9]{0,199}$";
+            String pattern1 = "^[A-Za-z]{0,50}$";
+            String pattern3 = "^[0-9]{0,10}$";
+            String pattern4 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,200}$$";
+            String pattern5 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,50}$";
+            String pattern6 = "^[A-Za-z0-9\\S`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,50}$";
             Pattern patt1 = Pattern.compile(pattern1);
-            Pattern patt2 = Pattern.compile(pattern2);
             Pattern patt3 = Pattern.compile(pattern3);
             Pattern patt4 = Pattern.compile(pattern4);
-            
-            Matcher match2 = patt1.matcher(itemtxt.getText());
+            Pattern patt5 = Pattern.compile(pattern5);
+            Pattern patt6 = Pattern.compile(pattern6);
+            Matcher match1 = patt6.matcher(controlidtxt.getText());
+            Matcher match2 = patt5.matcher(itemtxt.getText());
             Matcher match3 = patt4.matcher(descriptiontxt.getText());
             Matcher match4 = patt1.matcher(colortxt.getText());
             Matcher match5 = patt3.matcher(quantitytxt.getText());
-            Matcher match6 = patt2.matcher(locationtxt.getText());
-            Matcher match7 = patt2.matcher(serialtxt.getText());
-            Matcher match8 = patt1.matcher(acctxt.getText());
+            Matcher match6 = patt5.matcher(locationtxt.getText());
+            Matcher match7 = patt5.matcher(serialtxt.getText());
+            Matcher match8 = patt5.matcher(acctxt.getText());
             
-            if(!match2.matches() || 
+            if(!match1.matches() || 
+               !match2.matches() || 
                !match3.matches() || 
                !match4.matches() || 
                !match5.matches() || 
@@ -506,7 +509,7 @@ public class EditItem extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Input Color");
                 return;
             }
-            else if(quantity.equals(""))
+            else if(quantity == 0)
             {
                 JOptionPane.showMessageDialog(null, "Input Quantity");
                 return;
@@ -532,14 +535,12 @@ public class EditItem extends javax.swing.JFrame {
 
             ps.close();
 
-            //inv.BINDDATA("SELECT * from items");
-
             Inventory H = new Inventory();
             H.setVisible(true);
             dispose();
 
-        } catch (SQLException e) {
-            System.out.println(e);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e);
         }
     }//GEN-LAST:event_saveActionPerformed
 

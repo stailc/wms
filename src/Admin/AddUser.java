@@ -276,14 +276,15 @@ public class AddUser extends javax.swing.JFrame {
                 }
                 else
                 {
-                    String pattern1 = "^[A-Za-z0-9]{0,29}$";
-                    String pattern2 = "^[A-Za-z0-9]{7,29}$";
+                    String pattern1 = "^[A-Za-z0-9\\S]{0,30}$";
+                    String pattern2 = "^[A-Za-z0-9\\S`~!@#$%^&*)(-=_+;:\"',.<>/?]{8,30}$";
+                    
                     Pattern patt2 = Pattern.compile(pattern2);
                     Pattern patt1 = Pattern.compile(pattern1);
                     
                     Matcher match2 = patt1.matcher(uname.getText());
                     Matcher match3 = patt2.matcher(passtxt.getText());
-
+                    
 
                     if(!match2.matches())
                     {
@@ -292,9 +293,10 @@ public class AddUser extends javax.swing.JFrame {
                     }
                     else if(!match3.matches())
                     {
-                        JOptionPane.showMessageDialog(null, "Password is not long enough");
+                        JOptionPane.showMessageDialog(null, "Password should be atleast 8 characters long (30 Maximum)");
                         return;
                     }
+                    
                     
                     if(name.equals(""))
                     {
@@ -316,6 +318,8 @@ public class AddUser extends javax.swing.JFrame {
 
             ps.execute();
             ps.close();
+            
+            JOptionPane.showMessageDialog(null, "User Added!");
             
             UserManagement U = new UserManagement();
             U.setVisible(true);

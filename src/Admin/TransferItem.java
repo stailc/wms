@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -90,6 +92,8 @@ public class TransferItem extends javax.swing.JFrame {
         jLabel4.setText("Control No:");
 
         controltxt.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        controltxt.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        controltxt.setEnabled(false);
         controltxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 controltxtActionPerformed(evt);
@@ -378,6 +382,8 @@ public class TransferItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ReturnButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReturnButtonMouseClicked
+        EMPTYTRANSACTION();
+        
         TransactionBorrow TB = new TransactionBorrow();
         TB.setVisible(true);
         dispose();
@@ -396,6 +402,8 @@ public class TransferItem extends javax.swing.JFrame {
     }//GEN-LAST:event_locationtxtActionPerformed
 
     private void finishbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishbtnActionPerformed
+        EMPTYTRANSACTION();
+        
         Home H = new Home();
         H.setVisible(true);
         dispose();
@@ -420,11 +428,10 @@ public class TransferItem extends javax.swing.JFrame {
         String quantity = quantitytxt.getText();
         String location = locationtxt.getText();
         String status = "Transfer";
-        String progress = "Complete";
         
         PreparedStatement ps;
         ResultSet rs;
-        String register = "INSERT INTO `transactiondetails`(transaction_id, control_id, uom, quantity, remaining_quantity, remarks, location, status, progress) VALUES(?,?,?,?,?,?,?,?)";
+        String register = "INSERT INTO `transactiondetails`(transaction_id, control_id, uom, quantity, remaining_quantity, remarks, location, status) VALUES(?,?,?,?,?,?,?,?)";
         
         try {
 
@@ -438,7 +445,24 @@ public class TransferItem extends javax.swing.JFrame {
             ps.setString(7, location);
             ps.setString(8, status);
             
+            String pattern1 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,200}$";
+            String pattern2 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,45}$";
+            String pattern3 = "^[0-9]{0,10}$";
+            Pattern patt1 = Pattern.compile(pattern1);
+            Pattern patt2 = Pattern.compile(pattern2);
+            Pattern patt3 = Pattern.compile(pattern3);
             
+            Matcher match2 = patt3.matcher(quantitytxt.getText());
+            Matcher match3 = patt2.matcher(locationtxt.getText());
+            Matcher match4 = patt1.matcher(remarkstxt.getText());
+
+            if(!match2.matches() || 
+               !match3.matches() || 
+               !match4.matches())
+            {
+                JOptionPane.showMessageDialog(null, "Invalid Input");
+                return;
+            }
 
                 if(controltxt.getText().toString().length() == 0)
                 {
@@ -515,7 +539,7 @@ public class TransferItem extends javax.swing.JFrame {
                 {
                  Object obj[] = {rs.getString("control_id"), rs.getString("item_name") ,rs.getString("description") 
                          ,rs.getString("color") ,rs.getInt("quantity") ,rs.getString("location") 
-                         ,rs.getInt("serial_no") ,rs.getString("accountability")};
+                         ,rs.getString("serial_no") ,rs.getString("accountability")};
                  table.addRow(obj);
                 } 
             st.close();
@@ -620,6 +644,30 @@ public class TransferItem extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
         
+    }
+    
+    public void EMPTYTRANSACTION()
+    {
+        try
+        {   
+            Connection conn = MyConnection.getConnection();
+            
+            String sql = "DELETE FROM transactions WHERE transaction_id NOT IN (SELECT transaction_id FROM transactiondetails);";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            String sql1 = "ALTER TABLE transactions AUTO_INCREMENT = 1;";
+            
+            PreparedStatement ps1 = conn.prepareStatement(sql1);
+
+            ps.execute();
+            ps1.execute();
+
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
     
     

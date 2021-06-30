@@ -314,12 +314,10 @@ public class AddEmployee extends javax.swing.JFrame {
         try {
             
             
-            String pattern1 = "^[A-Za-z]{0,29}$";
-            String pattern2 = "^[A-Za-z0-9]{0,29}$";
-            String pattern3 = "^[0-9]{0,29}$";
+            String pattern1 = "^[A-Za-z\\s]{0,45}$";
+            String pattern2 = "^[A-Za-z0-9\\S`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,45}$";
             Pattern patt1 = Pattern.compile(pattern1);
             Pattern patt2 = Pattern.compile(pattern2);
-            Pattern patt3 = Pattern.compile(pattern3);
             
             Matcher match2 = patt2.matcher(employeeidtxt.getText());
             Matcher match3 = patt1.matcher(firstnametxt.getText());

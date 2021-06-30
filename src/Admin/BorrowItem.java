@@ -94,6 +94,8 @@ public class BorrowItem extends javax.swing.JFrame {
         jLabel4.setText("Control No:");
 
         controltxt.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        controltxt.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        controltxt.setEnabled(false);
         controltxt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 controltxtActionPerformed(evt);
@@ -382,9 +384,13 @@ public class BorrowItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ReturnButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReturnButtonMouseClicked
+        
+        EMPTYTRANSACTION();
+        
         TransactionBorrow TB = new TransactionBorrow();
         TB.setVisible(true);
         dispose();
+        
     }//GEN-LAST:event_ReturnButtonMouseClicked
 
     private void uomboxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uomboxActionPerformed
@@ -400,9 +406,15 @@ public class BorrowItem extends javax.swing.JFrame {
     }//GEN-LAST:event_locationtxtActionPerformed
 
     private void finishbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishbtnActionPerformed
+        
+        EMPTYTRANSACTION();
+        
         Home H = new Home();
         H.setVisible(true);
         dispose();
+        
+        
+        
     }//GEN-LAST:event_finishbtnActionPerformed
 
     private void itemtableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_itemtableMouseClicked
@@ -443,9 +455,9 @@ public class BorrowItem extends javax.swing.JFrame {
             ps.setString(8, status);
             ps.setInt(9, this.transaction_borrow_id);
             
-            String pattern1 = "^[A-Za-z0-9]{0,199}$";
-            String pattern2 = "^[A-Za-z0-9]{0,29}$";
-            String pattern3 = "^[0-9]{0,29}$";
+            String pattern1 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,200}$";
+            String pattern2 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,45}$";
+            String pattern3 = "^[0-9]{0,10}$";
             Pattern patt1 = Pattern.compile(pattern1);
             Pattern patt2 = Pattern.compile(pattern2);
             Pattern patt3 = Pattern.compile(pattern3);
@@ -538,7 +550,7 @@ public class BorrowItem extends javax.swing.JFrame {
                 {
                  Object obj[] = {rs.getString("control_id"), rs.getString("item_name") ,rs.getString("description") 
                          ,rs.getString("color") ,rs.getInt("quantity") ,rs.getString("location") 
-                         ,rs.getInt("serial_no") ,rs.getString("accountability")};
+                         ,rs.getString("serial_no") ,rs.getString("accountability")};
                  table.addRow(obj);
                 } 
             st.close();
@@ -643,6 +655,30 @@ public class BorrowItem extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, e);
         }
         
+    }
+    
+    public void EMPTYTRANSACTION()
+    {
+        try
+        {   
+            Connection conn = MyConnection.getConnection();
+            
+            String sql = "DELETE FROM transactions WHERE transaction_id NOT IN (SELECT transaction_id FROM transactiondetails);";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            String sql1 = "ALTER TABLE transactions AUTO_INCREMENT = 1;";
+            
+            PreparedStatement ps1 = conn.prepareStatement(sql1);
+
+            ps.execute();
+            ps1.execute();
+
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
     
     

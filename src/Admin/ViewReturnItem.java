@@ -371,8 +371,8 @@ public class ViewReturnItem extends javax.swing.JFrame {
         this.control_id = table.getValueAt(selectedRow2, 2).toString();
         BINDIMAGE(control_id);
         
-        BINDDATA3("SELECT * FROM transactiondetails WHERE control_id = " + this.control_id +
-                    " AND status = 'Return' ORDER BY transactiondetails_id DESC");
+        BINDDATA3("SELECT * FROM transactiondetails WHERE control_id = '" + this.control_id +
+                    "' AND status = 'Return' ORDER BY transactiondetails_id DESC");
         
         
         if(tdreturn.getRowCount() == 0)
@@ -516,7 +516,7 @@ public class ViewReturnItem extends javax.swing.JFrame {
         try
         {
    
-            String sql = "SELECT item_name FROM items WHERE control_id = " + this.control_id;
+            String sql = "SELECT item_name FROM items WHERE control_id = '" + this.control_id + "'";
             Statement st = MyConnection.getConnection().prepareStatement(sql); 
             ResultSet rs  = st.executeQuery(sql);
 
@@ -540,7 +540,7 @@ public class ViewReturnItem extends javax.swing.JFrame {
       try{
        
         Statement st = MyConnection.getConnection().createStatement();
-        String sql = "SELECT image FROM items WHERE control_id = " + id;
+        String sql = "SELECT image FROM items WHERE control_id = '" + id + "'";
         
         ResultSet rs = st.executeQuery(sql);
         

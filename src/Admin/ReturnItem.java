@@ -11,6 +11,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -433,6 +435,8 @@ public class ReturnItem extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ReturnButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReturnButtonMouseClicked
+        EMPTYTRANSACTION();
+        
         TransactionReturn TR = new TransactionReturn();
         TR.setVisible(true);
         dispose();
@@ -443,6 +447,8 @@ public class ReturnItem extends javax.swing.JFrame {
     }//GEN-LAST:event_quantitytxtActionPerformed
 
     private void finishbtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_finishbtnActionPerformed
+        EMPTYTRANSACTION();
+        
         Home H = new Home();
         H.setVisible(true);
         dispose();
@@ -490,22 +496,14 @@ public class ReturnItem extends javax.swing.JFrame {
         String quantity = quantitytxt.getText();
         String location = locationtxt.getText();
         String status = "Return";
-        String progress;
+        
 
         this.t_id = tlabel.getText();
         
         this.qty1 = Integer.parseInt(quantitytxt.getText());
 
         int new_rqty = this.RQTY - this.qty1;
-        
-        if(new_rqty == 0)
-        {
-            progress = "Complete";
-        }
-        else
-        {
-            progress = "In Progress";
-        }    
+  
 
         String register = "INSERT INTO `transactiondetails`(transaction_id, control_id, uom, quantity, remaining_quantity, remarks, location, status, transaction_borrow_id) VALUES "
         + "(?,?,?,?,?,?,?,?,?)";
@@ -521,6 +519,24 @@ public class ReturnItem extends javax.swing.JFrame {
             ps.setString(8, status);
             ps.setInt(9, this.transaction_borrow_id);
 
+            
+            String pattern2 = "^[A-Za-z0-9\\s`~!@#$%^&*)(-=_+;:\"',.<>/?]{0,45}$";
+            String pattern3 = "^[0-9]{0,10}$";
+            
+            Pattern patt2 = Pattern.compile(pattern2);
+            Pattern patt3 = Pattern.compile(pattern3);
+            
+            Matcher match2 = patt3.matcher(quantitytxt.getText());
+            Matcher match3 = patt2.matcher(locationtxt.getText());
+            
+
+            if(!match2.matches() || !match3.matches())
+            {
+                JOptionPane.showMessageDialog(null, "Invalid Input");
+                return;
+            }
+            
+            
                 if(controltxt.getText().toString().length() == 0)
                 {
                     JOptionPane.showMessageDialog(null, "Select a Item");     
@@ -549,10 +565,9 @@ public class ReturnItem extends javax.swing.JFrame {
 
                         ps.close();
 
-                        BINDDATA("SELECT * from transactions WHERE type = 'Borrow' ORDER BY transaction_id DESC");
                         BINDDATA2("SELECT * FROM transactiondetails WHERE transaction_id = " + this.id + " ORDER BY transaction_id DESC");
-                        BINDDATA3("SELECT * FROM transactiondetails WHERE control_id = " + this.control_id +
-                    " AND status = 'Return' AND transaction_borrow_id = "+ this.transaction_borrow_id +" ORDER BY transactiondetails_id DESC");
+                        BINDDATA3("SELECT * FROM transactiondetails WHERE control_id = '" + this.control_id +
+                    "' AND status = 'Return' AND transaction_borrow_id = "+ this.transaction_borrow_id +" ORDER BY transactiondetails_id DESC");
                     }
                 else
                     {
@@ -569,6 +584,7 @@ public class ReturnItem extends javax.swing.JFrame {
         preview.setText("");
         itemnamelabel.setText("");
         controltxt.setText("");
+        quantitytxt.setText("");
         
         DefaultTableModel table = (DefaultTableModel) tdtable.getModel();
         selectedRow2 = tdtable.getSelectedRow();
@@ -578,8 +594,8 @@ public class ReturnItem extends javax.swing.JFrame {
 
         this.transaction_borrow_id = Integer.parseInt(table.getValueAt(selectedRow2, 1).toString());
         
-        BINDDATA3("SELECT * FROM transactiondetails WHERE control_id = " + this.control_id +
-                    " AND status = 'Return' AND transaction_borrow_id = "+ this.transaction_borrow_id +" ORDER BY transactiondetails_id DESC");
+        BINDDATA3("SELECT * FROM transactiondetails WHERE control_id = '" + this.control_id +
+                    "' AND status = 'Return' AND transaction_borrow_id = "+ this.transaction_borrow_id +" ORDER BY transactiondetails_id DESC");
         
         
         if(tdreturn.getRowCount() == 0)
@@ -780,7 +796,7 @@ public class ReturnItem extends javax.swing.JFrame {
             
             //JOptionPane.showMessageDialog(null, "Item3: " + newqty);
             
-            String sql = "UPDATE items SET quantity = ? WHERE control_id = '" + this.control_id +"'";
+            String sql = "UPDATE items SET quantity = ? WHERE control_id = '" + this.control_id + "'";
             
             PreparedStatement ps = conn.prepareStatement(sql);
             
@@ -806,7 +822,7 @@ public class ReturnItem extends javax.swing.JFrame {
         try
         {
    
-            String sql = "SELECT item_name FROM items WHERE control_id = " + this.control_id;
+            String sql = "SELECT item_name FROM items WHERE control_id = '" + this.control_id + "'";
             Statement st = MyConnection.getConnection().prepareStatement(sql); 
             ResultSet rs  = st.executeQuery(sql);
 
@@ -830,7 +846,7 @@ public class ReturnItem extends javax.swing.JFrame {
       try{
        
         Statement st = MyConnection.getConnection().createStatement();
-        String sql = "SELECT image FROM items WHERE control_id = " + id;
+        String sql = "SELECT image FROM items WHERE control_id = '" + id + "'";
         
         ResultSet rs = st.executeQuery(sql);
         
@@ -849,6 +865,30 @@ public class ReturnItem extends javax.swing.JFrame {
       catch(Exception e){
       preview.setText("Photo Missing");
       }
+    }
+    
+    public void EMPTYTRANSACTION()
+    {
+        try
+        {   
+            Connection conn = MyConnection.getConnection();
+            
+            String sql = "DELETE FROM transactions WHERE transaction_id NOT IN (SELECT transaction_id FROM transactiondetails);";
+            
+            PreparedStatement ps = conn.prepareStatement(sql);
+            
+            String sql1 = "ALTER TABLE transactions AUTO_INCREMENT = 1;";
+            
+            PreparedStatement ps1 = conn.prepareStatement(sql1);
+
+            ps.execute();
+            ps1.execute();
+
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, e);
+        }
     }
   
     public void main(String args[]) {

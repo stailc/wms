@@ -11,6 +11,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.swing.JOptionPane;
 
 /**
@@ -44,6 +46,8 @@ public class EditUser extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         passtxt = new javax.swing.JTextField();
+        jLabel16 = new javax.swing.JLabel();
+        confirmpasstxt = new javax.swing.JTextField();
         idrow = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -76,6 +80,8 @@ public class EditUser extends javax.swing.JFrame {
         jLabel14.setText("Username:");
 
         uname.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        uname.setDisabledTextColor(new java.awt.Color(0, 0, 0));
+        uname.setEnabled(false);
         uname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 unameActionPerformed(evt);
@@ -104,7 +110,9 @@ public class EditUser extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 600, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 588, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -121,6 +129,16 @@ public class EditUser extends javax.swing.JFrame {
             }
         });
 
+        jLabel16.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        jLabel16.setText("Confirm Password:");
+
+        confirmpasstxt.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        confirmpasstxt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                confirmpasstxtActionPerformed(evt);
+            }
+        });
+
         idrow.setForeground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout panelLayout = new javax.swing.GroupLayout(panel);
@@ -128,32 +146,34 @@ public class EditUser extends javax.swing.JFrame {
         panelLayout.setHorizontalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelLayout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(idrow)
-                .addGap(106, 106, 106))
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(panelLayout.createSequentialGroup()
-                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(62, 62, 62)
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(111, 111, 111)
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(uname, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(117, 117, 117)
                         .addComponent(jLabel15)
                         .addGap(18, 18, 18)
                         .addComponent(passtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panelLayout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addComponent(jLabel13)
+                        .addComponent(jLabel14)
                         .addGap(18, 18, 18)
-                        .addComponent(usertypebox, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(uname, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel16)
+                            .addComponent(jLabel13))
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(usertypebox, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(confirmpasstxt, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panelLayout.createSequentialGroup()
+                                .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(idrow, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         panelLayout.setVerticalGroup(
             panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,13 +191,21 @@ public class EditUser extends javax.swing.JFrame {
                     .addComponent(passtxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(usertypebox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
+                    .addComponent(jLabel16)
+                    .addComponent(confirmpasstxt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel13)
+                            .addComponent(usertypebox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelLayout.createSequentialGroup()
+                        .addGap(42, 42, 42)
+                        .addComponent(idrow, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addGroup(panelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(save, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idrow))
+                    .addComponent(cancel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34))
         );
 
@@ -216,8 +244,9 @@ public class EditUser extends javax.swing.JFrame {
         
         id = Integer.valueOf(idrow.getText()).intValue();
         
-        String name = uname.getText();
+        
         String pass = passtxt.getText();
+        String confirmpass = confirmpasstxt.getText();
         String group = usertypebox.getSelectedItem().toString();
         String grouptype = null;
 
@@ -235,54 +264,65 @@ public class EditUser extends javax.swing.JFrame {
         Connection conn = MyConnection.getConnection();
         
         PreparedStatement ps;
-        String register = "UPDATE login SET username =?, password=? , group_id=? WHERE login_id =" + id;
+        String register = "UPDATE login SET password=? , group_id=? WHERE login_id =" + id;
 
         try {
             
             ps = conn.prepareStatement(register);
-            ps.setString(1, name);
-            ps.setString(2, pass);
-            ps.setString(3, grouptype);
             
-            String unamecheck = uname.getText();
-            Statement stmt = conn.createStatement();
-            String check = "SELECT COUNT(*) as result FROM login WHERE username = '" + unamecheck + "'";
-            ResultSet rs = stmt.executeQuery(check);
+            ps.setString(1, pass);
+            ps.setString(2, grouptype);
+
             
-            rs.next();
-            int result = rs.getInt("result");
-            
-            if(result > 0)
-            {
-                JOptionPane.showMessageDialog(null, "Username already exists");
-                return;
-            }
-            else
-            {
-                if(name.equals(""))
-                {
-                    JOptionPane.showMessageDialog(null, "Input User Name");
+                if(!confirmpass.equals(pass))
+                {    
+                    JOptionPane.showMessageDialog(null, "Password and Confirm Password does not match");
                     return;
                 }
-
-                else if(pass.equals(""))
+                else
                 {
-                    JOptionPane.showMessageDialog(null, "Input Password");
-                    return;
+                    String pattern1 = "^[A-Za-z0-9\\S]{0,30}$";
+                    String pattern2 = "^[A-Za-z0-9\\S`~!@#$%^&*)(-=_+;:\"',.<>/?]{8,30}$";
+                    
+                    Pattern patt2 = Pattern.compile(pattern2);
+                    Pattern patt1 = Pattern.compile(pattern1);
+                    
+                    Matcher match2 = patt1.matcher(uname.getText());
+                    Matcher match3 = patt2.matcher(passtxt.getText());
+                    
+
+                    if(!match2.matches())
+                    {
+                        JOptionPane.showMessageDialog(null, "Invalid Input");
+                        return;
+                    }
+                    else if(!match3.matches())
+                    {
+                        JOptionPane.showMessageDialog(null, "Password should be atleast 8 characters long (30 Maximum)");
+                        return;
+                    }
+
+                    if(pass.equals(""))
+                    {
+                        JOptionPane.showMessageDialog(null, "Input Password");
+                        return;
+                    }
+                    else if(group == null)
+                    {
+                        JOptionPane.showMessageDialog(null, "Select a User Group");
+                        return;
+                    }
                 }
-                else if(group == null)
-                {
-                    JOptionPane.showMessageDialog(null, "Select a User Group");
-                    return;
-                }
+            
 
-                ps.close();
-
-
-                UserManagement U = new UserManagement();
-                U.setVisible(true);
-                dispose();
-            }
+            ps.execute();
+            ps.close();
+            
+            JOptionPane.showMessageDialog(null, "User Updated!");
+            
+            UserManagement U = new UserManagement();
+            U.setVisible(true);
+            dispose();
         
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e);
@@ -292,7 +332,12 @@ public class EditUser extends javax.swing.JFrame {
     private void passtxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passtxtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passtxtActionPerformed
- 
+
+    private void confirmpasstxtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_confirmpasstxtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_confirmpasstxtActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -319,6 +364,10 @@ public class EditUser extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -330,14 +379,16 @@ public class EditUser extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton cancel;
+    private javax.swing.JTextField confirmpasstxt;
     public javax.swing.JLabel idrow;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel panel;
-    public javax.swing.JTextField passtxt;
+    private javax.swing.JTextField passtxt;
     private javax.swing.JButton save;
     public javax.swing.JTextField uname;
     public javax.swing.JComboBox<String> usertypebox;

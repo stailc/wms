@@ -7,8 +7,12 @@ package Admin;
 
 import Connection.MyConnection;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.PrintWriter;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -43,6 +47,7 @@ public class TransactionLog extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         filterbox = new javax.swing.JComboBox<>();
+        generatecsv = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -153,6 +158,14 @@ public class TransactionLog extends javax.swing.JFrame {
             }
         });
 
+        generatecsv.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        generatecsv.setText("Generate CSV");
+        generatecsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatecsvActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -169,7 +182,9 @@ public class TransactionLog extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(filterbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 526, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 385, Short.MAX_VALUE)
+                .addComponent(generatecsv)
+                .addGap(18, 18, 18)
                 .addComponent(refresh)
                 .addGap(38, 38, 38))
             .addComponent(jScrollPane2)
@@ -185,7 +200,8 @@ public class TransactionLog extends javax.swing.JFrame {
                     .addComponent(search)
                     .addComponent(refresh)
                     .addComponent(jLabel2)
-                    .addComponent(filterbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(filterbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(generatecsv))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -239,6 +255,72 @@ public class TransactionLog extends javax.swing.JFrame {
 
         FILTER(query);
     }//GEN-LAST:event_filterboxItemStateChanged
+
+    private void generatecsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatecsvActionPerformed
+        Connection conn = MyConnection.getConnection();
+
+        try{
+            String csvfilename;
+            
+            csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
+            
+            if(csvfilename != null)
+            {
+
+            String sql = "SELECT * FROM transactions";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            
+            PrintWriter pw = new PrintWriter(new File("C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv"));
+            StringBuilder sb = new StringBuilder();
+            
+                sb.append("Transaction ID");
+                sb.append(",");
+                sb.append("Date");
+                sb.append(",");
+                sb.append("Employee ID");
+                sb.append(",");
+                sb.append("Type");
+                sb.append(",");
+                sb.append("Process By");
+                sb.append("\r\n");
+            
+            
+            while(rs.next())
+            {
+                sb.append(rs.getInt("transaction_id"));
+                sb.append(",");
+                sb.append(rs.getString("date"));
+                sb.append(",");
+                sb.append(rs.getString("employee_id"));
+                sb.append(",");
+                sb.append(rs.getString("type"));
+                sb.append(",");
+                sb.append(rs.getString("process_by"));
+                sb.append("\r\n");
+            } 
+            
+            st.close();
+            
+            pw.write(sb.toString());
+            pw.close();
+            
+            JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
+            + "File path: C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv");
+            
+            }
+            else
+            {
+                
+            }
+            
+            
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+    }//GEN-LAST:event_generatecsvActionPerformed
 
     private void BINDDATA(String sql)
     {
@@ -341,6 +423,7 @@ public class TransactionLog extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ReturnButton2;
     private javax.swing.JComboBox<String> filterbox;
+    private javax.swing.JButton generatecsv;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

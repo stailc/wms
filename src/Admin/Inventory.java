@@ -6,15 +6,24 @@
 package Admin;
 
 import Connection.MyConnection;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
@@ -26,6 +35,8 @@ public class Inventory extends javax.swing.JFrame {
 
     public int selectedRow;
     public String id;
+    public File file;
+    
     public Inventory() {
         initComponents();
         
@@ -60,6 +71,8 @@ public class Inventory extends javax.swing.JFrame {
         delete = new javax.swing.JButton();
         preview = new javax.swing.JLabel();
         edititem = new javax.swing.JButton();
+        addcsv = new javax.swing.JButton();
+        generatecsv = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -221,6 +234,22 @@ public class Inventory extends javax.swing.JFrame {
             }
         });
 
+        addcsv.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        addcsv.setText("Add CSV");
+        addcsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addcsvActionPerformed(evt);
+            }
+        });
+
+        generatecsv.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        generatecsv.setText("Generate CSV");
+        generatecsv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatecsvActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -235,7 +264,11 @@ public class Inventory extends javax.swing.JFrame {
                         .addComponent(searchtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(search)
-                        .addGap(501, 501, 501)
+                        .addGap(231, 231, 231)
+                        .addComponent(generatecsv)
+                        .addGap(18, 18, 18)
+                        .addComponent(addcsv, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(edititem, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(delete)
@@ -264,7 +297,9 @@ public class Inventory extends javax.swing.JFrame {
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(additem)
                             .addComponent(edititem)
-                            .addComponent(delete)))
+                            .addComponent(delete)
+                            .addComponent(addcsv)
+                            .addComponent(generatecsv)))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -327,19 +362,19 @@ public class Inventory extends javax.swing.JFrame {
         int decision = JOptionPane.showConfirmDialog(null, "Are you sure?",null, JOptionPane.YES_NO_OPTION);
         if(decision == JOptionPane.YES_OPTION) 
         {
-        
-        try{
+            try
+            {
 
-            String sql = "DELETE FROM items WHERE control_id = " + this.id;
-            PreparedStatement ps = MyConnection.getConnection().prepareStatement(sql);
-            ps.execute(sql);
+                String sql = "DELETE FROM items WHERE control_id = '" + this.id + "'";
+                PreparedStatement ps = MyConnection.getConnection().prepareStatement(sql);
+                ps.execute(sql);
 
-            ps.close();
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, e.toString());
-        }
+                ps.close();
+            }
+            catch(Exception e)
+            {
+                JOptionPane.showMessageDialog(null, e.toString());
+            }
 
         BINDDATA("SELECT * from items");
         }
@@ -409,6 +444,136 @@ public class Inventory extends javax.swing.JFrame {
         
         dispose();
     }//GEN-LAST:event_edititemActionPerformed
+
+    private void addcsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addcsvActionPerformed
+        JFileChooser chooser = new JFileChooser("C:\\Users\\Y2J_2\\Downloads\\CSV");
+        chooser.setPreferredSize(new Dimension(500, 500));
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files (*csv)", "csv");
+        chooser.setFileFilter(filter);
+        
+        chooser.showOpenDialog(null);
+        File f = chooser.getSelectedFile();
+
+        String filename = f.getAbsolutePath();
+        
+        try
+        {
+            
+            Connection conn = MyConnection.getConnection();
+            
+            Statement st = conn.createStatement();
+
+            String line = "";
+            String insert_sql = "";
+            
+       
+            BufferedReader br = new BufferedReader(new FileReader(filename));
+            
+            while((line = br.readLine()) != null)
+            {
+                String[] values = line.split(",");
+                
+                insert_sql = "INSERT INTO items (control_id, item_name, description, image, color, quantity, location, serial_no, accountability) "
+                        + "VALUES('" + values[0] + "', '" + values[1] + "', '" + values[2] + "','null' ,'" + values[3] + "', " + values[4] 
+                        + ", '" + values[5] + "', '" + values[6] + "', '" + values[7] + "');";
+                
+                System.out.println(values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6] + values[7]);
+                st.execute(insert_sql);
+            }
+            
+            
+            insert_sql="";
+            
+            JOptionPane.showMessageDialog(null, "CSV File Successfully Added");
+            
+            BINDDATA("SELECT * from items");
+            
+            
+        }
+        catch(Exception e)
+        {
+            System.out.println(e);
+        }
+        
+    }//GEN-LAST:event_addcsvActionPerformed
+
+    private void generatecsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatecsvActionPerformed
+        
+        Connection conn = MyConnection.getConnection();
+
+        try {
+            String csvfilename;
+            
+            csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
+            
+            if(csvfilename != null)
+            {
+            
+            String sql = "SELECT * FROM items";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(sql);
+            
+            
+            PrintWriter pw = new PrintWriter(new File("C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv"));
+            StringBuilder sb = new StringBuilder();
+            
+                sb.append("Control ID");
+                sb.append(",");
+                sb.append("Item Name");
+                sb.append(",");
+                sb.append("Description");
+                sb.append(",");
+                sb.append("Color");
+                sb.append(",");
+                sb.append("Quantity");
+                sb.append(",");
+                sb.append("Location");
+                sb.append(",");
+                sb.append("Serial No.");
+                sb.append(",");
+                sb.append("Accountability");
+                sb.append("\r\n");
+            
+            
+            while(rs.next())
+            {
+                sb.append(rs.getString("control_id"));
+                sb.append(",");
+                sb.append(rs.getString("item_name"));
+                sb.append(",");
+                sb.append(rs.getString("description"));
+                sb.append(",");
+                sb.append(rs.getString("color"));
+                sb.append(",");
+                sb.append(rs.getInt("quantity"));
+                sb.append(",");
+                sb.append(rs.getString("location"));
+                sb.append(",");
+                sb.append(rs.getString("serial_no"));
+                sb.append(",");
+                sb.append( rs.getString("accountability"));
+                sb.append("\r\n");
+            } 
+            
+            st.close();
+            
+            pw.write(sb.toString());
+            pw.close();
+            
+            JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
+            + "File path: C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv");
+            
+            }
+            else
+            {
+                
+            }
+                
+            
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+    }//GEN-LAST:event_generatecsvActionPerformed
     
     public void BINDDATA(String sql)
     {
@@ -424,8 +589,8 @@ public class Inventory extends javax.swing.JFrame {
             while(rs.next())
                 {
                  Object obj[] = {rs.getString("control_id"), rs.getString("item_name") ,rs.getString("description") 
-                         /*,rs.getString("image")*/ ,rs.getString("color") ,rs.getInt("quantity") ,rs.getString("location") 
-                         ,rs.getInt("serial_no") ,rs.getString("accountability")};
+                         ,rs.getString("color") ,rs.getInt("quantity") ,rs.getString("location") 
+                         ,rs.getString("serial_no") ,rs.getString("accountability")};
                  table.addRow(obj);
                 } 
             st.close();
@@ -440,7 +605,7 @@ public class Inventory extends javax.swing.JFrame {
       try{
        
         Statement st = MyConnection.getConnection().createStatement();
-        String sql = "SELECT image FROM items WHERE control_id = " + id;
+        String sql = "SELECT image FROM items WHERE control_id = '" + id + "'";
         
         ResultSet rs = st.executeQuery(sql);
         
@@ -466,6 +631,7 @@ public class Inventory extends javax.swing.JFrame {
         st.close();
       }
       catch(Exception e){
+      System.out.println(e);
       preview.setText("Photo Missing");
       
       
@@ -511,10 +677,12 @@ public class Inventory extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel ReturnButton;
+    public javax.swing.JButton addcsv;
     private javax.swing.JButton additem;
     private javax.swing.JButton delete;
     public javax.swing.JButton edititem;
     private javax.swing.JComboBox<String> filterbox;
+    public javax.swing.JButton generatecsv;
     public javax.swing.JTable itemtable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
