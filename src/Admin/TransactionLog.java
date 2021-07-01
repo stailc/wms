@@ -315,7 +315,7 @@ public class TransactionLog extends javax.swing.JFrame {
 
                         pw.write(sb.toString());
                         pw.close();
-                        System.out.println("Done");
+                        
                         JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
                         + "File path: " + f.getSelectedFile() + "\\"+ csvfilename +".csv");
 

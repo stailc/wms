@@ -19,6 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -466,9 +467,8 @@ public class Inventory extends javax.swing.JFrame {
             String line = "";
             String insert_sql = "";
             
-       
             BufferedReader br = new BufferedReader(new FileReader(filename));
-            
+
             while((line = br.readLine()) != null)
             {
                 String[] values = line.split(",");
@@ -480,10 +480,9 @@ public class Inventory extends javax.swing.JFrame {
                 System.out.println(values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6] + values[7]);
                 st.execute(insert_sql);
             }
-            
-            
+
             insert_sql="";
-            
+
             JOptionPane.showMessageDialog(null, "CSV File Successfully Added");
             
             BINDDATA("SELECT * from items");
@@ -569,7 +568,7 @@ public class Inventory extends javax.swing.JFrame {
 
                         pw.write(sb.toString());
                         pw.close();
-                        System.out.println("Done");
+                        
                         JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
                         + "File path: " + f.getSelectedFile() + "\\"+ csvfilename +".csv");
 
