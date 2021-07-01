@@ -15,6 +15,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -377,74 +378,82 @@ public class Employees extends javax.swing.JFrame {
         Connection conn = MyConnection.getConnection();
 
         try {
-            String csvfilename;
+            JFileChooser f = new JFileChooser();
+            f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            f.setDialogTitle("Select Save Directory");
+            f.showSaveDialog(null);
             
-            csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
-            
-            if(csvfilename != null)
+            if(f.getSelectedFile() == null)
             {
-            
-            String sql = "SELECT * FROM employees";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
-            
-            PrintWriter pw = new PrintWriter(new File("C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv"));
-            StringBuilder sb = new StringBuilder();
-            
-                sb.append("Employee ID");
-                sb.append(",");
-                sb.append("Company Name");
-                sb.append(",");
-                sb.append("Department");
-                sb.append(",");
-                sb.append("First Name");
-                sb.append(",");
-                sb.append("Last Name");
-                sb.append(",");
-                sb.append("Middle Name");
-                sb.append(",");
-                sb.append("Birth Date");
-                sb.append(",");
-                sb.append("Gender");
-                sb.append("\r\n");
-            
-            
-            while(rs.next())
-            {
-                sb.append(rs.getString("employee_id"));
-                sb.append(",");
-                sb.append(rs.getString("company_name"));
-                sb.append(",");
-                sb.append(rs.getString("department"));
-                sb.append(",");
-                sb.append(rs.getString("firstname"));
-                sb.append(",");
-                sb.append(rs.getString("lastname"));
-                sb.append(",");
-                sb.append(rs.getString("middlename"));
-                sb.append(",");
-                sb.append(rs.getString("birthdate"));
-                sb.append(",");
-                sb.append( rs.getString("gender"));
-                sb.append("\r\n");
-            } 
-            
-            st.close();
-            
-            pw.write(sb.toString());
-            pw.close();
-            
-            JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
-            + "File path: C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv");
-            
+               return;
             }
             else
             {
-                
-            }
-                
+                String csvfilename;
+                csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
+
+                    if(csvfilename != null)
+                    {
+                        String sql = "SELECT * FROM employees";
+                        Statement st = conn.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        PrintWriter pw = new PrintWriter(new File(f.getSelectedFile()+ "\\" + csvfilename + ".csv"));
+
+                        StringBuilder sb = new StringBuilder();
+
+                            sb.append("Employee ID");
+                            sb.append(",");
+                            sb.append("Company Name");
+                            sb.append(",");
+                            sb.append("Department");
+                            sb.append(",");
+                            sb.append("First Name");
+                            sb.append(",");
+                            sb.append("Last Name");
+                            sb.append(",");
+                            sb.append("Middle Name");
+                            sb.append(",");
+                            sb.append("Birth Date");
+                            sb.append(",");
+                            sb.append("Gender");
+                            sb.append("\r\n");
             
+            
+                        while(rs.next())
+                        {
+                            sb.append(rs.getString("employee_id"));
+                            sb.append(",");
+                            sb.append(rs.getString("company_name"));
+                            sb.append(",");
+                            sb.append(rs.getString("department"));
+                            sb.append(",");
+                            sb.append(rs.getString("firstname"));
+                            sb.append(",");
+                            sb.append(rs.getString("lastname"));
+                            sb.append(",");
+                            sb.append(rs.getString("middlename"));
+                            sb.append(",");
+                            sb.append(rs.getString("birthdate"));
+                            sb.append(",");
+                            sb.append( rs.getString("gender"));
+                            sb.append("\r\n");
+                        } 
+
+                        st.close();
+
+                        pw.write(sb.toString());
+                        pw.close();
+                        System.out.println("Done");
+                        JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
+                        + "File path: " + f.getSelectedFile() + "\\"+ csvfilename +".csv");
+
+                    }
+                    else
+                    {
+                       return;
+                    }
+            }
         } catch (Exception ex) {
             System.out.println(ex);
         }

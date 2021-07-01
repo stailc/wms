@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -260,62 +261,70 @@ public class TransactionLog extends javax.swing.JFrame {
         Connection conn = MyConnection.getConnection();
 
         try{
-            String csvfilename;
+            JFileChooser f = new JFileChooser();
+            f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            f.setDialogTitle("Select Save Directory");
+            f.showSaveDialog(null);
             
-            csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
-            
-            if(csvfilename != null)
+            if(f.getSelectedFile() == null)
             {
-
-            String sql = "SELECT * FROM transactions";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
-            
-            PrintWriter pw = new PrintWriter(new File("C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv"));
-            StringBuilder sb = new StringBuilder();
-            
-                sb.append("Transaction ID");
-                sb.append(",");
-                sb.append("Date");
-                sb.append(",");
-                sb.append("Employee ID");
-                sb.append(",");
-                sb.append("Type");
-                sb.append(",");
-                sb.append("Process By");
-                sb.append("\r\n");
-            
-            
-            while(rs.next())
-            {
-                sb.append(rs.getInt("transaction_id"));
-                sb.append(",");
-                sb.append(rs.getString("date"));
-                sb.append(",");
-                sb.append(rs.getString("employee_id"));
-                sb.append(",");
-                sb.append(rs.getString("type"));
-                sb.append(",");
-                sb.append(rs.getString("process_by"));
-                sb.append("\r\n");
-            } 
-            
-            st.close();
-            
-            pw.write(sb.toString());
-            pw.close();
-            
-            JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
-            + "File path: C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv");
-            
+               return;
             }
             else
             {
-                
+                String csvfilename;
+                csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
+
+                    if(csvfilename != null)
+                    {
+                        String sql = "SELECT * FROM transactions";
+                        Statement st = conn.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        PrintWriter pw = new PrintWriter(new File(f.getSelectedFile()+ "\\" + csvfilename + ".csv"));
+
+                        StringBuilder sb = new StringBuilder();
+
+                            sb.append("Transaction ID");
+                            sb.append(",");
+                            sb.append("Date");
+                            sb.append(",");
+                            sb.append("Employee ID");
+                            sb.append(",");
+                            sb.append("Type");
+                            sb.append(",");
+                            sb.append("Process By");
+                            sb.append("\r\n");
+            
+            
+                        while(rs.next())
+                        {
+                            sb.append(rs.getInt("transaction_id"));
+                            sb.append(",");
+                            sb.append(rs.getString("date"));
+                            sb.append(",");
+                            sb.append(rs.getString("employee_id"));
+                            sb.append(",");
+                            sb.append(rs.getString("type"));
+                            sb.append(",");
+                            sb.append(rs.getString("process_by"));
+                            sb.append("\r\n");
+                        } 
+
+                        st.close();
+
+                        pw.write(sb.toString());
+                        pw.close();
+                        System.out.println("Done");
+                        JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
+                        + "File path: " + f.getSelectedFile() + "\\"+ csvfilename +".csv");
+
+                    }
+                    else
+                    {
+                       return;
+                    }
             }
-            
-            
         } catch (Exception ex) {
             System.out.println(ex);
         }

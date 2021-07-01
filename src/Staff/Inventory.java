@@ -503,74 +503,82 @@ public class Inventory extends javax.swing.JFrame {
         Connection conn = MyConnection.getConnection();
 
         try {
-            String csvfilename;
+            JFileChooser f = new JFileChooser();
+            f.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            f.setDialogTitle("Select Save Directory");
+            f.showSaveDialog(null);
             
-            csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
-            
-            if(csvfilename != null)
+            if(f.getSelectedFile() == null)
             {
-            
-            String sql = "SELECT * FROM items";
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery(sql);
-            
-            
-            PrintWriter pw = new PrintWriter(new File("C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv"));
-            StringBuilder sb = new StringBuilder();
-            
-                sb.append("Control ID");
-                sb.append(",");
-                sb.append("Item Name");
-                sb.append(",");
-                sb.append("Description");
-                sb.append(",");
-                sb.append("Color");
-                sb.append(",");
-                sb.append("Quantity");
-                sb.append(",");
-                sb.append("Location");
-                sb.append(",");
-                sb.append("Serial No.");
-                sb.append(",");
-                sb.append("Accountability");
-                sb.append("\r\n");
-            
-            
-            while(rs.next())
-            {
-                sb.append(rs.getString("control_id"));
-                sb.append(",");
-                sb.append(rs.getString("item_name"));
-                sb.append(",");
-                sb.append(rs.getString("description"));
-                sb.append(",");
-                sb.append(rs.getString("color"));
-                sb.append(",");
-                sb.append(rs.getInt("quantity"));
-                sb.append(",");
-                sb.append(rs.getString("location"));
-                sb.append(",");
-                sb.append(rs.getString("serial_no"));
-                sb.append(",");
-                sb.append( rs.getString("accountability"));
-                sb.append("\r\n");
-            } 
-            
-            st.close();
-            
-            pw.write(sb.toString());
-            pw.close();
-            
-            JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
-            + "File path: C:\\Users\\Y2J_2\\Downloads\\CSV\\"+ csvfilename +".csv");
-            
+               return;
             }
             else
             {
-                
+                String csvfilename;
+                csvfilename = JOptionPane.showInputDialog("Input CSV Filename");
+
+                    if(csvfilename != null)
+                    {
+                        String sql = "SELECT * FROM items";
+                        Statement st = conn.createStatement();
+                        ResultSet rs = st.executeQuery(sql);
+                        
+                        PrintWriter pw = new PrintWriter(new File(f.getSelectedFile()+ "\\" + csvfilename + ".csv"));
+
+                        StringBuilder sb = new StringBuilder();
+
+                            sb.append("control_id");
+                            sb.append(",");
+                            sb.append("item_name");
+                            sb.append(",");
+                            sb.append("description");
+                            sb.append(",");
+                            sb.append("color");
+                            sb.append(",");
+                            sb.append("quantity");
+                            sb.append(",");
+                            sb.append("location");
+                            sb.append(",");
+                            sb.append("serial_no");
+                            sb.append(",");
+                            sb.append("accountability");
+                            sb.append("\r\n");
+
+
+                        while(rs.next())
+                        {
+                            sb.append(rs.getString("control_id"));
+                            sb.append(",");
+                            sb.append(rs.getString("item_name"));
+                            sb.append(",");
+                            sb.append(rs.getString("description"));
+                            sb.append(",");
+                            sb.append(rs.getString("color"));
+                            sb.append(",");
+                            sb.append(rs.getInt("quantity"));
+                            sb.append(",");
+                            sb.append(rs.getString("location"));
+                            sb.append(",");
+                            sb.append(rs.getString("serial_no"));
+                            sb.append(",");
+                            sb.append( rs.getString("accountability"));
+                            sb.append("\r\n");
+                        } 
+
+                        st.close();
+
+                        pw.write(sb.toString());
+                        pw.close();
+                        System.out.println("Done");
+                        JOptionPane.showMessageDialog(null, "CSV File Successfully Generated \n"
+                        + "File path: " + f.getSelectedFile() + "\\"+ csvfilename +".csv");
+
+                    }
+                    else
+                    {
+                       return;
+                    }
             }
-                
-            
         } catch (Exception ex) {
             System.out.println(ex);
         }
