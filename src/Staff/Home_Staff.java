@@ -19,7 +19,15 @@ public class Home_Staff extends javax.swing.JFrame {
 
     public Home_Staff() {
         initComponents();
-
+        
+        
+        resetColor(AddItemPanel);
+        resetColor(LogoutPanel);
+        resetColor(ItemsPanel);
+        resetColor(TransferItemPanel);
+        resetColor(BorrowItemPanel);
+        resetColor(ReturnItemPanel);
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -58,6 +66,11 @@ public class Home_Staff extends javax.swing.JFrame {
         MainPanel.setMinimumSize(new java.awt.Dimension(900, 600));
         MainPanel.setPreferredSize(new java.awt.Dimension(900, 600));
         MainPanel.setVerifyInputWhenFocusTarget(false);
+        MainPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                MainPanelMouseEntered(evt);
+            }
+        });
 
         HeaderPanel.setBackground(new java.awt.Color(255, 102, 0));
         HeaderPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -117,6 +130,9 @@ public class Home_Staff extends javax.swing.JFrame {
         ItemsPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         ItemsPanel.setPreferredSize(new java.awt.Dimension(140, 120));
         ItemsPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ItemsPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ItemsPanelMouseEntered(evt);
             }
@@ -149,6 +165,9 @@ public class Home_Staff extends javax.swing.JFrame {
         LogoutPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         LogoutPanel.setPreferredSize(new java.awt.Dimension(140, 120));
         LogoutPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 LogoutPanelMouseEntered(evt);
             }
@@ -181,6 +200,9 @@ public class Home_Staff extends javax.swing.JFrame {
         AddItemPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         AddItemPanel.setPreferredSize(new java.awt.Dimension(140, 120));
         AddItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddItemPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AddItemPanelMouseEntered(evt);
             }
@@ -212,6 +234,9 @@ public class Home_Staff extends javax.swing.JFrame {
         TransferItemPanel.setMaximumSize(new java.awt.Dimension(140, 120));
         TransferItemPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         TransferItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TransferItemPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 TransferItemPanelMouseEntered(evt);
             }
@@ -243,6 +268,9 @@ public class Home_Staff extends javax.swing.JFrame {
         BorrowItemPanel.setMaximumSize(new java.awt.Dimension(140, 120));
         BorrowItemPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         BorrowItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BorrowItemPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BorrowItemPanelMouseEntered(evt);
             }
@@ -274,6 +302,9 @@ public class Home_Staff extends javax.swing.JFrame {
         ReturnItemPanel.setMaximumSize(new java.awt.Dimension(140, 120));
         ReturnItemPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         ReturnItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ReturnItemPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ReturnItemPanelMouseEntered(evt);
             }
@@ -457,6 +488,45 @@ public class Home_Staff extends javax.swing.JFrame {
     private void HeaderPanelMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HeaderPanelMouseDragged
 
     }//GEN-LAST:event_HeaderPanelMouseDragged
+
+    private void MainPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MainPanelMouseEntered
+        resetColor(AddItemPanel);
+        resetColor(LogoutPanel);
+        resetColor(ItemsPanel);
+        resetColor(TransferItemPanel);
+        resetColor(BorrowItemPanel);
+        resetColor(ReturnItemPanel);
+    }//GEN-LAST:event_MainPanelMouseEntered
+
+    private void ItemsPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ItemsPanelMouseClicked
+        new Inventory().show();
+        dispose();
+    }//GEN-LAST:event_ItemsPanelMouseClicked
+
+    private void AddItemPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddItemPanelMouseClicked
+        new AddItem().show();
+        dispose();
+    }//GEN-LAST:event_AddItemPanelMouseClicked
+
+    private void TransferItemPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TransferItemPanelMouseClicked
+        new TransactionTransfer().show();
+        dispose();
+    }//GEN-LAST:event_TransferItemPanelMouseClicked
+
+    private void BorrowItemPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorrowItemPanelMouseClicked
+        new TransactionBorrow().show();
+        dispose();
+    }//GEN-LAST:event_BorrowItemPanelMouseClicked
+
+    private void ReturnItemPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReturnItemPanelMouseClicked
+        new TransactionReturn().show();
+        dispose();
+    }//GEN-LAST:event_ReturnItemPanelMouseClicked
+
+    private void LogoutPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutPanelMouseClicked
+        new LoginForm().show();
+        dispose();
+    }//GEN-LAST:event_LogoutPanelMouseClicked
 
     public void setColor(JPanel panel) {
         panel.setBackground(new java.awt.Color(197, 197, 197));

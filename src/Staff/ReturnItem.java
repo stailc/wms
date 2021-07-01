@@ -41,7 +41,7 @@ public class ReturnItem extends javax.swing.JFrame {
 
         setdata();
         
-        BINDDATA("SELECT * from transactions WHERE type = 'Borrow' AND employee_id  = '" + id + "'ORDER BY transaction_id DESC");
+        BINDDATA("SELECT * from transactions WHERE type = 'Borrow' AND employee_id  = '" + id + "' ORDER BY transaction_id DESC");
         
     }
 

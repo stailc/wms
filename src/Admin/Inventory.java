@@ -566,7 +566,7 @@ public class Inventory extends javax.swing.JFrame {
             }
             else
             {
-                
+               
             }
                 
             

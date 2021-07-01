@@ -18,7 +18,16 @@ public class Home extends javax.swing.JFrame {
 
     public Home() {
         initComponents();
-
+        
+        resetColor(EmployeesPanel);
+        resetColor(UserManagementPanel);
+        resetColor(AddItemPanel);
+        resetColor(LogoutPanel);
+        resetColor(ItemsPanel);
+        resetColor(TransferItemPanel);
+        resetColor(BorrowItemPanel);
+        resetColor(ReturnItemPanel);
+        resetColor(TransactionLogPanel);
     }
 
     @SuppressWarnings("unchecked")
@@ -66,6 +75,11 @@ public class Home extends javax.swing.JFrame {
         MainPanel.setMinimumSize(new java.awt.Dimension(900, 600));
         MainPanel.setPreferredSize(new java.awt.Dimension(900, 600));
         MainPanel.setVerifyInputWhenFocusTarget(false);
+        MainPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                MainPanelMouseEntered(evt);
+            }
+        });
 
         HeaderPanel.setBackground(new java.awt.Color(255, 102, 0));
         HeaderPanel.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
@@ -125,6 +139,9 @@ public class Home extends javax.swing.JFrame {
         ItemsPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         ItemsPanel.setPreferredSize(new java.awt.Dimension(140, 120));
         ItemsPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ItemsPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ItemsPanelMouseEntered(evt);
             }
@@ -157,6 +174,9 @@ public class Home extends javax.swing.JFrame {
         LogoutPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         LogoutPanel.setPreferredSize(new java.awt.Dimension(140, 120));
         LogoutPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                LogoutPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 LogoutPanelMouseEntered(evt);
             }
@@ -189,6 +209,9 @@ public class Home extends javax.swing.JFrame {
         AddItemPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         AddItemPanel.setPreferredSize(new java.awt.Dimension(140, 120));
         AddItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AddItemPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 AddItemPanelMouseEntered(evt);
             }
@@ -221,6 +244,9 @@ public class Home extends javax.swing.JFrame {
         UserManagementPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         UserManagementPanel.setPreferredSize(new java.awt.Dimension(140, 120));
         UserManagementPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                UserManagementPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 UserManagementPanelMouseEntered(evt);
             }
@@ -252,6 +278,9 @@ public class Home extends javax.swing.JFrame {
         TransferItemPanel.setMaximumSize(new java.awt.Dimension(140, 120));
         TransferItemPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         TransferItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TransferItemPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 TransferItemPanelMouseEntered(evt);
             }
@@ -283,6 +312,9 @@ public class Home extends javax.swing.JFrame {
         BorrowItemPanel.setMaximumSize(new java.awt.Dimension(140, 120));
         BorrowItemPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         BorrowItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BorrowItemPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 BorrowItemPanelMouseEntered(evt);
             }
@@ -314,6 +346,9 @@ public class Home extends javax.swing.JFrame {
         EmployeesPanel.setMaximumSize(new java.awt.Dimension(140, 120));
         EmployeesPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         EmployeesPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EmployeesPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 EmployeesPanelMouseEntered(evt);
             }
@@ -345,6 +380,9 @@ public class Home extends javax.swing.JFrame {
         ReturnItemPanel.setMaximumSize(new java.awt.Dimension(140, 120));
         ReturnItemPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         ReturnItemPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ReturnItemPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 ReturnItemPanelMouseEntered(evt);
             }
@@ -377,6 +415,9 @@ public class Home extends javax.swing.JFrame {
         TransactionLogPanel.setMinimumSize(new java.awt.Dimension(140, 120));
         TransactionLogPanel.setPreferredSize(new java.awt.Dimension(140, 120));
         TransactionLogPanel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                TransactionLogPanelMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 TransactionLogPanelMouseEntered(evt);
             }
@@ -411,14 +452,7 @@ public class Home extends javax.swing.JFrame {
             .addComponent(HeaderPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(MainPanelLayout.createSequentialGroup()
                 .addGap(218, 218, 218)
-                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(MainPanelLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(ItemsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(AddItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(16, 16, 16)
-                        .addComponent(TransferItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(MainPanelLayout.createSequentialGroup()
                         .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(TransactionLogPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -434,19 +468,26 @@ public class Home extends javax.swing.JFrame {
                                 .addComponent(ReturnItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(EmployeesPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(2, 2, 2)))))
+                                .addGap(2, 2, 2))))
+                    .addGroup(MainPanelLayout.createSequentialGroup()
+                        .addComponent(ItemsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(AddItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(TransferItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(2, 2, 2)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         MainPanelLayout.setVerticalGroup(
             MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MainPanelLayout.createSequentialGroup()
                 .addComponent(HeaderPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58)
+                .addGap(64, 64, 64)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(ItemsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(AddItemPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(TransferItemPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                .addGap(18, 18, 18)
                 .addGroup(MainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(EmployeesPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(ReturnItemPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -564,7 +605,7 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_BorrowItemPanelMouseEntered
 
     private void BorrowItemPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorrowItemPanelMouseExited
-        resetColor(BorrowItemPanel);
+       resetColor(BorrowItemPanel); 
     }//GEN-LAST:event_BorrowItemPanelMouseExited
 
     private void EmployeesIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeesIconMouseClicked
@@ -625,6 +666,63 @@ public class Home extends javax.swing.JFrame {
     private void TransactionLogPanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TransactionLogPanelMouseExited
         resetColor(TransactionLogPanel);
     }//GEN-LAST:event_TransactionLogPanelMouseExited
+
+    private void MainPanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_MainPanelMouseEntered
+        resetColor(EmployeesPanel);
+        resetColor(UserManagementPanel);
+        resetColor(AddItemPanel);
+        resetColor(LogoutPanel);
+        resetColor(ItemsPanel);
+        resetColor(TransferItemPanel);
+        resetColor(BorrowItemPanel);
+        resetColor(ReturnItemPanel);
+        resetColor(TransactionLogPanel);
+    }//GEN-LAST:event_MainPanelMouseEntered
+
+    private void ItemsPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ItemsPanelMouseClicked
+        new Inventory().show();
+        dispose();
+    }//GEN-LAST:event_ItemsPanelMouseClicked
+
+    private void AddItemPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddItemPanelMouseClicked
+        new AddItem().show();
+        dispose();
+    }//GEN-LAST:event_AddItemPanelMouseClicked
+
+    private void TransferItemPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TransferItemPanelMouseClicked
+        new TransactionTransfer().show();
+        dispose();
+    }//GEN-LAST:event_TransferItemPanelMouseClicked
+
+    private void BorrowItemPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BorrowItemPanelMouseClicked
+        new TransactionBorrow().show();
+        dispose();
+    }//GEN-LAST:event_BorrowItemPanelMouseClicked
+
+    private void ReturnItemPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ReturnItemPanelMouseClicked
+        new TransactionReturn().show();
+        dispose();
+    }//GEN-LAST:event_ReturnItemPanelMouseClicked
+
+    private void EmployeesPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EmployeesPanelMouseClicked
+        new Employees().show();
+        dispose();
+    }//GEN-LAST:event_EmployeesPanelMouseClicked
+
+    private void TransactionLogPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_TransactionLogPanelMouseClicked
+        new TransactionLog().show();
+        dispose();
+    }//GEN-LAST:event_TransactionLogPanelMouseClicked
+
+    private void UserManagementPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UserManagementPanelMouseClicked
+        new UserManagement().show();
+        dispose();
+    }//GEN-LAST:event_UserManagementPanelMouseClicked
+
+    private void LogoutPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_LogoutPanelMouseClicked
+        new LoginForm().show();
+        dispose();
+    }//GEN-LAST:event_LogoutPanelMouseClicked
 
     public void setColor(JPanel panel) {
         panel.setBackground(new java.awt.Color(197, 197, 197));

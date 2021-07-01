@@ -49,7 +49,7 @@ public class TransactionTransfer extends javax.swing.JFrame {
         jLabel1.setText("Date:");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        jLabel3.setText("Employee Id:");
+        jLabel3.setText("Employee ID:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
         jLabel4.setText("Name:");
@@ -114,7 +114,7 @@ public class TransactionTransfer extends javax.swing.JFrame {
                                 .addComponent(cancelbtn))
                             .addComponent(nametxt, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(employeebox, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(118, Short.MAX_VALUE))
+                        .addContainerGap(116, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(datelabel, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -164,7 +164,7 @@ public class TransactionTransfer extends javax.swing.JFrame {
         TransferItem TI = new TransferItem();
 
         String id = employeebox.getSelectedItem().toString();
-        String sql = "SELECT CONCAT(firstname,' ',lastname) 'Fullname' FROM employees WHERE employee_id = " + id;
+        String sql = "SELECT CONCAT(firstname,' ',lastname) 'Fullname' FROM employees WHERE employee_id = '" + id + "'";
         //String auto_id = "SELECT CONCAT(max(transaction_id)) 'id' FROM transactions";
       try{
          
@@ -200,7 +200,7 @@ public class TransactionTransfer extends javax.swing.JFrame {
 
     private void employeeboxItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_employeeboxItemStateChanged
         String id = employeebox.getSelectedItem().toString();
-        String sql = "SELECT CONCAT(firstname,' ',lastname) 'Fullname' FROM employees WHERE employee_id = " + id;
+        String sql = "SELECT CONCAT(firstname,' ',lastname) 'Fullname' FROM employees WHERE employee_id = '" + id + "'";
         
       try{
          
