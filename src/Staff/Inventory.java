@@ -474,8 +474,8 @@ public class Inventory extends javax.swing.JFrame {
             {
                 String[] values = line.split(",");
                 
-                insert_sql = "INSERT INTO items (control_id, item_name, description, image, color, quantity, location, serial_no, accountability) "
-                        + "VALUES('" + values[0] + "', '" + values[1] + "', '" + values[2] + "','null' ,'" + values[3] + "', " + values[4] 
+                insert_sql = "INSERT INTO items (control_id, item_name, description, color, quantity, location, serial_no, accountability) "
+                        + "VALUES('" + values[0] + "', '" + values[1] + "', '" + values[2] + "', '" + values[3] + "', " + values[4] 
                         + ", '" + values[5] + "', '" + values[6] + "', '" + values[7] + "');";
                 
                 System.out.println(values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6] + values[7]);
@@ -641,8 +641,7 @@ public class Inventory extends javax.swing.JFrame {
       }
       catch(Exception e){
       preview.setText("Photo Missing");
-      
-      
+
       }
     }
     

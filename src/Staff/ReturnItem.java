@@ -289,7 +289,6 @@ public class ReturnItem extends javax.swing.JFrame {
         });
 
         preview.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        preview.setText("Image");
         preview.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         preview.setPreferredSize(new java.awt.Dimension(300, 300));
 

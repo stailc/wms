@@ -415,9 +415,10 @@ public class ViewReturnItem extends javax.swing.JFrame {
         {
             itemnamelabel.setText("");
             controltxt.setText("");
-
-            controltxt.setText(this.control_id);
+            
             setitem();
+            controltxt.setText(this.control_id);
+
             this.qty = Integer.parseInt(table.getValueAt(selectedRow3, 4).toString());
             this.RQTY = Integer.parseInt(table.getValueAt(selectedRow3, 5).toString());
             
@@ -525,6 +526,8 @@ public class ViewReturnItem extends javax.swing.JFrame {
             String itemname = rs.getString("item_name");
             
             itemnamelabel.setText(itemname);
+            
+            
   
         }
         catch(Exception e)

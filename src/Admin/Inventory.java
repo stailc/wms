@@ -447,6 +447,7 @@ public class Inventory extends javax.swing.JFrame {
     }//GEN-LAST:event_edititemActionPerformed
 
     private void addcsvActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addcsvActionPerformed
+        
         JFileChooser chooser = new JFileChooser("C:\\Users\\Y2J_2\\Downloads\\CSV");
         chooser.setPreferredSize(new Dimension(500, 500));
         FileNameExtensionFilter filter = new FileNameExtensionFilter("CSV files (*csv)", "csv");
@@ -460,8 +461,8 @@ public class Inventory extends javax.swing.JFrame {
         try
         {
             
+
             Connection conn = MyConnection.getConnection();
-            
             Statement st = conn.createStatement();
 
             String line = "";
@@ -469,15 +470,18 @@ public class Inventory extends javax.swing.JFrame {
             
             BufferedReader br = new BufferedReader(new FileReader(filename));
 
+            
+            
             while((line = br.readLine()) != null)
             {
                 String[] values = line.split(",");
                 
-                insert_sql = "INSERT INTO items (control_id, item_name, description, image, color, quantity, location, serial_no, accountability) "
-                        + "VALUES('" + values[0] + "', '" + values[1] + "', '" + values[2] + "','null' ,'" + values[3] + "', " + values[4] 
+                insert_sql = "INSERT INTO items (control_id, item_name, description, color, quantity, location, serial_no, accountability) "
+                        + "VALUES('" + values[0] + "', '" + values[1] + "', '" + values[2] + "', '" + values[3] + "', " + values[4] 
                         + ", '" + values[5] + "', '" + values[6] + "', '" + values[7] + "');";
                 
                 System.out.println(values[0] + values[1] + values[2] + values[3] + values[4] + values[5] + values[6] + values[7]);
+
                 st.execute(insert_sql);
             }
 
@@ -628,6 +632,7 @@ public class Inventory extends javax.swing.JFrame {
           if(x==0)
           {
             preview.setIcon(newImage);
+ 
           }
           else
           {
@@ -639,7 +644,6 @@ public class Inventory extends javax.swing.JFrame {
         st.close();
       }
       catch(Exception e){
-      System.out.println(e);
       preview.setText("Photo Missing");
       
       
