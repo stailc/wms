@@ -191,7 +191,7 @@ public class TransferItem extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Transfer Item");
+        jLabel3.setText("TRANSFER ITEM");
 
         ReturnButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Return Button.png"))); // NOI18N
         ReturnButton.addMouseListener(new java.awt.event.MouseAdapter() {

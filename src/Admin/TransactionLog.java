@@ -88,7 +88,7 @@ public class TransactionLog extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Transaction Log");
+        jLabel5.setText("TRANSACTION LOG");
 
         ReturnButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Return Button.png"))); // NOI18N
         ReturnButton2.addMouseListener(new java.awt.event.MouseAdapter() {
