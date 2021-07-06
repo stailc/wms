@@ -13,6 +13,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JFileChooser;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -22,9 +23,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class TransactionLog extends javax.swing.JFrame {
 
-    /**
-     * Creates new form TransactionLog
-     */
+    public int selectedRow;
+    public int id;
+    
+    
     public TransactionLog() {
         initComponents();
         
@@ -72,6 +74,11 @@ public class TransactionLog extends javax.swing.JFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        transactiontable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                transactiontableMouseClicked(evt);
             }
         });
         jScrollPane2.setViewportView(transactiontable);
@@ -152,7 +159,7 @@ public class TransactionLog extends javax.swing.JFrame {
         jLabel2.setText("Filter By:");
 
         filterbox.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
-        filterbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Date", "Employee ID", "Type (Transfer)", "Type (Borrow)", "Type (Return)" }));
+        filterbox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "None", "Date", "Type (Transfer)", "Type (Borrow)", "Type (Return)" }));
         filterbox.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
                 filterboxItemStateChanged(evt);
@@ -331,6 +338,27 @@ public class TransactionLog extends javax.swing.JFrame {
 
     }//GEN-LAST:event_generatecsvActionPerformed
 
+    private void transactiontableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_transactiontableMouseClicked
+        
+        TransactionLogDetails TLD = new TransactionLogDetails();
+        
+        
+        DefaultTableModel table = (DefaultTableModel)transactiontable.getModel();
+        selectedRow = transactiontable.getSelectedRow();
+        
+        this.id = Integer.parseInt(table.getValueAt(selectedRow, 0).toString());
+        
+        TLD.BINDDATATD("SELECT * FROM transactiondetails WHERE transaction_id = " + this.id + " ORDER BY transaction_id DESC");
+        
+        TLD.setVisible(true);
+        TLD.pack();
+        TLD.setLocationRelativeTo(null);
+        TLD.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        
+        dispose();
+        
+    }//GEN-LAST:event_transactiontableMouseClicked
+
     private void BINDDATA(String sql)
     {
       try{
@@ -362,12 +390,6 @@ public class TransactionLog extends javax.swing.JFrame {
         if(query.equals("Date"))
         {
             String sql = "SELECT * FROM transactions order by date ASC";
-
-            BINDDATA(sql);
-        }
-        else if(query.equals("Employee ID"))
-        {
-            String sql = "SELECT * FROM transactions order by employee_id ASC";
 
             BINDDATA(sql);
         }
