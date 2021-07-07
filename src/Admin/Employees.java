@@ -8,6 +8,7 @@ package Admin;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import Connection.MyConnection;
+import Reports.GenerateEmployeesReport;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.PrintWriter;
@@ -48,6 +49,7 @@ public class Employees extends javax.swing.JFrame {
         deleteemployee = new javax.swing.JButton();
         editemployee = new javax.swing.JButton();
         generatecsv = new javax.swing.JButton();
+        generatereport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -198,6 +200,14 @@ public class Employees extends javax.swing.JFrame {
             }
         });
 
+        generatereport.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        generatereport.setText("Generate Report");
+        generatereport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatereportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -210,7 +220,9 @@ public class Employees extends javax.swing.JFrame {
                 .addComponent(searchtxt, javax.swing.GroupLayout.PREFERRED_SIZE, 276, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36)
                 .addComponent(search)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 291, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 132, Short.MAX_VALUE)
+                .addComponent(generatereport)
+                .addGap(18, 18, 18)
                 .addComponent(generatecsv)
                 .addGap(18, 18, 18)
                 .addComponent(editemployee)
@@ -233,7 +245,8 @@ public class Employees extends javax.swing.JFrame {
                     .addComponent(addemployee)
                     .addComponent(deleteemployee)
                     .addComponent(editemployee)
-                    .addComponent(generatecsv))
+                    .addComponent(generatecsv)
+                    .addComponent(generatereport))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -459,6 +472,13 @@ public class Employees extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_generatecsvActionPerformed
 
+    private void generatereportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatereportActionPerformed
+
+        GenerateEmployeesReport t = new GenerateEmployeesReport();
+        t.GenerateEMP();
+
+    }//GEN-LAST:event_generatereportActionPerformed
+
     public void BINDDATA(String sql)
     {
       try{
@@ -520,6 +540,7 @@ public class Employees extends javax.swing.JFrame {
     private javax.swing.JButton editemployee;
     public javax.swing.JTable employeetable;
     private javax.swing.JButton generatecsv;
+    public javax.swing.JButton generatereport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;

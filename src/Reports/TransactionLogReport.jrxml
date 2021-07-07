@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="114bf89f-e92b-4534-a1d3-644e1911ee2d">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<queryString language="SQL">
+		<![CDATA[SELECT
+     transactions.`transaction_id` AS transactions_transaction_id,
+     transactions.`date` AS transactions_date,
+     transactions.`employee_id` AS transactions_employee_id,
+     transactions.`type` AS transactions_type,
+     transactions.`process_by` AS transactions_process_by
+FROM
+     `transactions` transactions]]>
+	</queryString>
+	<field name="transactions_transaction_id" class="java.lang.Integer"/>
+	<field name="transactions_date" class="java.sql.Date"/>
+	<field name="transactions_employee_id" class="java.lang.String"/>
+	<field name="transactions_type" class="java.lang.String"/>
+	<field name="transactions_process_by" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="136" splitType="Stretch">
+			<image>
+				<reportElement x="1" y="0" width="134" height="123" uuid="4ab3526d-a52b-48b9-ba5e-f9c4411ec5d7"/>
+				<imageExpression><![CDATA["C:\\Users\\Y2J_2\\Desktop\\IT\\JAVA\\Test Programs\\WMS\\src\\Icons\\Centtro Logo Login.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement style="Title" x="175" y="16" width="475" height="62" uuid="ac2bcd33-9d47-4abd-8ea1-0702d62e7078"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Tahoma" size="40" pdfFontName="Times-Bold" isPdfEmbedded="false"/>
+				</textElement>
+				<text><![CDATA[Transaction Log Report]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="16" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="15" width="802" height="1" uuid="2e2710ce-71e8-4f90-85cd-4a33b8e2945c"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement style="Column header" x="0" y="0" width="160" height="15" forecolor="#736343" uuid="6eb605c8-aeeb-4cdf-a2e4-288359bcccc0"/>
+				<text><![CDATA[Transaction ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="160" y="0" width="160" height="15" forecolor="#736343" uuid="4297a2e6-c1ba-441e-8aae-adee1e9d9892"/>
+				<text><![CDATA[Date]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="320" y="0" width="160" height="15" forecolor="#736343" uuid="74c007d8-7795-4b35-ba1a-9d83eecaac13"/>
+				<text><![CDATA[Employee ID]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="480" y="0" width="160" height="15" forecolor="#736343" uuid="7d0ed695-8c7a-4173-b7ee-702f4f98c0bc"/>
+				<text><![CDATA[Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement style="Column header" x="640" y="0" width="160" height="15" forecolor="#736343" uuid="0521e5f0-0d7b-4a06-8c90-195f6b09d8af"/>
+				<text><![CDATA[Process By]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="15" splitType="Stretch">
+			<frame>
+				<reportElement style="Row" mode="Opaque" x="0" y="0" width="802" height="15" uuid="244e4ef3-67dd-40bd-b970-ac43e5e86057"/>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="0" y="0" width="160" height="15" uuid="29520bf1-b68d-4dc4-a22d-bba7de11e5ea"/>
+					<textFieldExpression><![CDATA[$F{transactions_transaction_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="160" y="0" width="160" height="15" uuid="33bbfe7b-f58e-4904-838d-af79954fc5f6"/>
+					<textFieldExpression><![CDATA[$F{transactions_date}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="320" y="0" width="160" height="15" uuid="778f266c-8579-4efc-9397-d1a04193ad75"/>
+					<textFieldExpression><![CDATA[$F{transactions_employee_id}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="480" y="0" width="160" height="15" uuid="da3aa48f-316c-4669-8879-4af1e2a916bf"/>
+					<textFieldExpression><![CDATA[$F{transactions_type}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true">
+					<reportElement style="Detail" x="640" y="0" width="160" height="15" uuid="f64cc374-65f5-4c16-9993-2b88b83f5c4a"/>
+					<textFieldExpression><![CDATA[$F{transactions_process_by}]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="6" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="802" height="1" uuid="5c06a705-c436-4032-b71c-06d6367ea838"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="-21" y="1" width="843" height="24" forecolor="#FFFFFF" backcolor="#FF9933" uuid="9213b655-3d18-40f2-96a3-fc31b3b6796f"/>
+				<textField evaluationTime="Report">
+					<reportElement style="Column header" x="783" y="1" width="40" height="20" forecolor="#736343" uuid="b0908356-fd51-4683-ace2-616f3aac8c15"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement style="Column header" x="703" y="1" width="80" height="20" forecolor="#736343" uuid="118de2a0-1dc8-40db-8cb8-92c1e79216a1"/>
+					<textElement textAlignment="Right" verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				</textField>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement style="Column header" x="22" y="1" width="197" height="20" forecolor="#736343" uuid="8cf3e773-14df-4bde-a6a0-d6a8201f91f7"/>
+					<textElement verticalAlignment="Middle">
+						<font size="10" isBold="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

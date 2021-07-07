@@ -6,6 +6,7 @@
 package Admin;
 
 import Connection.MyConnection;
+import Reports.GenerateTransactionLogReport;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.PrintWriter;
@@ -51,6 +52,7 @@ public class TransactionLog extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         filterbox = new javax.swing.JComboBox<>();
         generatecsv = new javax.swing.JButton();
+        generatereport = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -174,6 +176,14 @@ public class TransactionLog extends javax.swing.JFrame {
             }
         });
 
+        generatereport.setFont(new java.awt.Font("Tahoma", 0, 15)); // NOI18N
+        generatereport.setText("Generate Report");
+        generatereport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                generatereportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -190,7 +200,9 @@ public class TransactionLog extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
                 .addComponent(filterbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 385, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 226, Short.MAX_VALUE)
+                .addComponent(generatereport)
+                .addGap(18, 18, 18)
                 .addComponent(generatecsv)
                 .addGap(18, 18, 18)
                 .addComponent(refresh)
@@ -209,7 +221,8 @@ public class TransactionLog extends javax.swing.JFrame {
                     .addComponent(refresh)
                     .addComponent(jLabel2)
                     .addComponent(filterbox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(generatecsv))
+                    .addComponent(generatecsv)
+                    .addComponent(generatereport))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 538, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -359,6 +372,11 @@ public class TransactionLog extends javax.swing.JFrame {
         
     }//GEN-LAST:event_transactiontableMouseClicked
 
+    private void generatereportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generatereportActionPerformed
+        GenerateTransactionLogReport t = new GenerateTransactionLogReport();
+        t.GenerateTL();
+    }//GEN-LAST:event_generatereportActionPerformed
+
     private void BINDDATA(String sql)
     {
       try{
@@ -455,6 +473,7 @@ public class TransactionLog extends javax.swing.JFrame {
     private javax.swing.JLabel ReturnButton2;
     private javax.swing.JComboBox<String> filterbox;
     private javax.swing.JButton generatecsv;
+    public javax.swing.JButton generatereport;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;

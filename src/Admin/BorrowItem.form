@@ -307,7 +307,7 @@
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="8" rowCount="4">
-                    <Column editable="false" title="Trasaction Details ID" type="java.lang.Object"/>
+                    <Column editable="false" title="Transaction Details ID" type="java.lang.Object"/>
                     <Column editable="false" title="Transaction ID" type="java.lang.Object"/>
                     <Column editable="false" title="Control ID" type="java.lang.Object"/>
                     <Column editable="false" title="UOM" type="java.lang.Object"/>
@@ -319,7 +319,7 @@
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="100" resizable="false">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="120" resizable="false">
                       <Title/>
                       <Editor/>
                       <Renderer/>

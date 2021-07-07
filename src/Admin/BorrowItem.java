@@ -148,7 +148,7 @@ public class BorrowItem extends javax.swing.JFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Trasaction Details ID", "Transaction ID", "Control ID", "UOM", "Quantity", "Remarks", "Location", "Status"
+                "Transaction Details ID", "Transaction ID", "Control ID", "UOM", "Quantity", "Remarks", "Location", "Status"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -162,7 +162,7 @@ public class BorrowItem extends javax.swing.JFrame {
         jScrollPane2.setViewportView(borrowtable);
         if (borrowtable.getColumnModel().getColumnCount() > 0) {
             borrowtable.getColumnModel().getColumn(0).setResizable(false);
-            borrowtable.getColumnModel().getColumn(0).setPreferredWidth(100);
+            borrowtable.getColumnModel().getColumn(0).setPreferredWidth(120);
             borrowtable.getColumnModel().getColumn(1).setResizable(false);
             borrowtable.getColumnModel().getColumn(2).setResizable(false);
             borrowtable.getColumnModel().getColumn(3).setResizable(false);
