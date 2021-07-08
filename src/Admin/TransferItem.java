@@ -492,7 +492,11 @@ public class TransferItem extends javax.swing.JFrame {
                 {
                     
                 if(Integer.parseInt(quantity) <= this.qty)
-                    {    
+                    {   
+                        
+                        if(Integer.parseInt(quantity) != 0)
+                        {
+                        
                         int new_qty = this.qty - Integer.parseInt(quantity);
                         updateqty(new_qty);
 
@@ -508,6 +512,11 @@ public class TransferItem extends javax.swing.JFrame {
 
                         BINDDATA("SELECT * from items");
                         BINDDATA2("SELECT * FROM transactiondetails WHERE transaction_id = " + this.transaction_id);
+                        }
+                        else
+                        {
+                            JOptionPane.showMessageDialog(null, "The quantity should be not equal to 0");
+                        }
                     }
                 else
                     {
